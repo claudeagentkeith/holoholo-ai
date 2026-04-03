@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import ItineraryDay from '@/components/ItineraryDay'
 
-interface Activity { time: string; title: string; description: string; type: string }
+interface Activity { time: string; name: string; description: string; type: string }
 interface Day { day: number; title: string; activities: Activity[] }
 interface Itinerary { id: string; title: string; days: Day[]; totalImpact: string }
 
@@ -17,19 +17,19 @@ export default function ItineraryPage({ params }: { params: { id: string } }) {
       title: 'Your Regenerative Hawaii Journey',
       days: [
         { day: 1, title: 'Ocean Conservation Day', activities: [
-          { time: '8:00 AM', title: 'Reef Restoration Workshop', description: 'Learn coral planting techniques with marine biologists.', type: 'conservation' },
-          { time: '12:00 PM', title: 'Farm-to-Table Lunch', description: 'Enjoy locally sourced cuisine at a regenerative farm.', type: 'dining' },
-          { time: '2:00 PM', title: 'Coastal Cleanup', description: 'Join community volunteers for a beach cleanup.', type: 'volunteer' },
+          { time: '8:00 AM', name: 'Reef Restoration Workshop', description: 'Learn coral planting techniques with marine biologists.', type: 'conservation' },
+          { time: '12:00 PM', name: 'Farm-to-Table Lunch', description: 'Enjoy locally sourced cuisine at a regenerative farm.', type: 'food' },
+          { time: '2:00 PM', name: 'Coastal Cleanup', description: 'Join community volunteers for a beach cleanup.', type: 'conservation' },
         ]},
         { day: 2, title: 'Cultural Immersion Day', activities: [
-          { time: '9:00 AM', title: 'Taro Farming Experience', description: 'Work alongside Native Hawaiian farmers in a traditional loi.', type: 'cultural' },
-          { time: '1:00 PM', title: 'Lei Making Workshop', description: 'Learn the art of lei making with native flowers.', type: 'cultural' },
-          { time: '5:00 PM', title: 'Sunset Ceremony', description: 'Participate in a traditional Hawaiian blessing.', type: 'cultural' },
+          { time: '9:00 AM', name: 'Taro Farming Experience', description: 'Work alongside Native Hawaiian farmers in a traditional loi.', type: 'cultural' },
+          { time: '1:00 PM', name: 'Lei Making Workshop', description: 'Learn the art of lei making with native flowers.', type: 'cultural' },
+          { time: '5:00 PM', name: 'Sunset Ceremony', description: 'Participate in a traditional Hawaiian blessing.', type: 'cultural' },
         ]},
         { day: 3, title: 'Land Restoration Day', activities: [
-          { time: '7:00 AM', title: 'Native Reforestation', description: 'Plant endemic Hawaiian trees in a restoration area.', type: 'conservation' },
-          { time: '11:00 AM', title: 'Wildlife Monitoring', description: 'Assist researchers tracking native bird species.', type: 'conservation' },
-          { time: '3:00 PM', title: 'Impact Reflection', description: 'Review your environmental and cultural impact.', type: 'reflection' },
+          { time: '7:00 AM', name: 'Native Reforestation', description: 'Plant endemic Hawaiian trees in a restoration area.', type: 'forestry' },
+          { time: '11:00 AM', name: 'Wildlife Monitoring', description: 'Assist researchers tracking native bird species.', type: 'conservation' },
+          { time: '3:00 PM', name: 'Impact Reflection', description: 'Review your environmental and cultural impact.', type: 'education' },
         ]},
       ],
       totalImpact: '3 coral fragments planted, 12 native trees planted, 15 lbs waste removed',
@@ -46,8 +46,8 @@ export default function ItineraryPage({ params }: { params: { id: string } }) {
       <h1 className="text-3xl font-bold text-gray-900 mb-2">{itinerary.title}</h1>
       <p className="text-teal-600 mb-8">Itinerary #{itinerary.id}</p>
       <div className="space-y-6">
-        {itinerary.days.map((day) => (
-          <ItineraryDay key={day.day} day={day} />
+        {itinerary.days.map((d) => (
+          <ItineraryDay key={d.day} day={d.day} title={d.title} activities={d.activities} />
         ))}
       </div>
       <div className="mt-8 p-6 bg-teal-50 rounded-xl border border-teal-200">
