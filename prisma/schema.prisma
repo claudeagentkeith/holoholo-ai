@@ -1,1 +1,157 @@
-datasource db
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Island {
+  OAHU
+  MAUI
+  BIG_ISLAND
+  KAUAI
+}
+
+enum Category {
+  CULTURAL
+  ECOLOGICAL
+  CULINARY
+  ADVENTURE
+  WELLNESS
+  EDUCATIONAL
+}
+
+enum AvailabilityType {
+  DAILY
+  WEEKDAYS
+  WEEKENDS
+  CUSTOM
+}
+
+enum BudgetTier {
+  BUDGET
+  MID
+  PREMIUM
+}
+
+enum TripStatus {
+  DRAFT
+  GENERATED
+  BOOKED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum ExperienceStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum MetricType {
+  TREES_PLANTED
+  REEF_RESTORED_SQFT
+  CULTURAL_HOURS
+  LOCAL_SPEND_DOLLARS
+  CARBON_OFFSET_LBS
+  MEALS_PROVIDED
+  VOLUNTEERS_ENGAGED
+}
+
+model Operator {
+  id              String       @id @default(cuid())
+  name            String
+  email           String       @unique
+  phone           String?
+  island          Island
+  bio             String       @db.Text
+  photoUrl        String?
+  website         String?
+  category        Category[]
+  verified        Boolean      @default(false)
+  active          Boolean      @default(true)
+  impactStatement String?      @db.Text
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  experiences     Experience[]
+}
+
+model Experience {
+  id              String           @id @default(cuid())
+  operatorId      String
+  operator        Operator         @relation(fields: [operatorId], references: [id])
+  name            String
+  description     String           @db.Text
+  island          Island
+  category        Category
+  durationMinutes Int
+  pricePerPerson  Float
+  maxGroupSize    Int
+  budgetTier      BudgetTier
+  availability    AvailabilityType
+  availableFrom   DateTime?
+  availableTo     DateTime?
+  impactMetrics   ImpactMetric[]
+  photoUrl        String?
+  status          ExperienceStatus @default(ACTIVE)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  bookings        Booking[]
+}
+
+model Trip {
+  id              String     @id @default(cuid())
+  email           String?
+  arrivalDate     DateTime
+  departureDate   DateTime
+  islands         Island[]
+  groupSize       Int
+  interests       Category[]
+  budgetTier      BudgetTier @default(MID)
+  premiumConcierge Boolean   @default(false)
+  specialRequests String?    @db.Text
+  itinerary       Json?
+  totalPrice      Float?
+  status          TripStatus @default(DRAFT)
+  stripeSessionId String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  bookings        Booking[]
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  tripId        String
+  trip          Trip          @relation(fields: [tripId], references: [id])
+  experienceId  String
+  experience    Experience    @relation(fields: [experienceId], references: [id])
+  date          DateTime
+  groupSize     Int
+  totalPrice    Float
+  status        BookingStatus @default(PENDING)
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model ImpactMetric {
+  id           String     @id @default(cuid())
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id])
+  metricType   MetricType
+  value        Float
+  description  String?
+  createdAt    DateTime   @default(now())
+}
