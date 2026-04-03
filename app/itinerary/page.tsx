@@ -70,15 +70,18 @@ export default function ItineraryPage() {
     setSelectedLeisure(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]);
   };
 
+  const searchWords = searchQuery.toLowerCase().split(/[\s,]+/).filter(w => w.length > 0);
+  const matchesSearch = (text: string) => {
+    if (searchWords.length === 0) return true;
+    const lower = text.toLowerCase();
+    return searchWords.some(word => lower.includes(word));
+  };
   const filteredRegen = regenActivities.filter(a =>
-    a.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    a.desc.toLowerCase().includes(searchQuery.toLowerCase())
+    matchesSearch(a.label) || matchesSearch(a.desc)
   );
 
   const filteredLeisure = leisureActivities.filter(a =>
-    a.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    a.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    a.category.toLowerCase().includes(searchQuery.toLowerCase())
+    matchesSearch(a.label) || matchesSearch(a.desc) || matchesSearch(a.category)
   );
 
   const categories = Array.from(new Set(filteredLeisure.map(a => a.category)));
@@ -109,7 +112,7 @@ export default function ItineraryPage() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search activities... (e.g. surf, hike, luau, food)"
+                  placeholder="List everything you want to do — e.g. luau beaches and hikes"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-lg"
@@ -123,7 +126,7 @@ export default function ItineraryPage() {
               </div>
               {searchQuery && (
                 <p className="mt-2 text-sm text-gray-500">
-                  Showing {filteredRegen.length + filteredLeisure.length} results for &ldquo;{searchQuery}&rdquo;
+                  Showing {filteredRegen.length + filteredLeisure.length} matching activities
                 </p>
               )}
             </div>
