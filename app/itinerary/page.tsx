@@ -6,52 +6,52 @@ import Footer from '../../components/Footer';
 import UnderConstruction from '../../components/UnderConstruction';
 
 const regenActivities = [
-  { icon: '🐠', label: 'Reef Restoration', desc: 'Plant coral fragments with marine biologists' },
-  { icon: '🌿', label: 'Native Reforestation', desc: 'Restore native koa and ohia forests' },
-  { icon: '🏖️', label: 'Coastal Cleanup', desc: 'Beach cleanups and dune restoration' },
-  { icon: '🌾', label: 'Taro Farming', desc: 'Traditional lo\'i kalo restoration' },
-  { icon: '🐦', label: 'Wildlife Monitoring', desc: 'Help track endangered Hawaiian species' },
-  { icon: '🐢', label: 'Sea Turtle Conservation', desc: 'Protect nesting sites and hatchlings' },
-  { icon: '🌊', label: 'Wetland Restoration', desc: 'Restore native fishponds and wetlands' },
-  { icon: '🦈', label: 'Shark Research', desc: 'Tag and track reef sharks for conservation' },
-  { icon: '🪸', label: 'Reef Monitoring', desc: 'Underwater surveys and data collection' },
-  { icon: '🌺', label: 'Native Garden Planting', desc: 'Grow endemic Hawaiian plants' },
+  { icon: 'ð ', label: 'Reef Restoration', desc: 'Plant coral fragments with marine biologists' },
+  { icon: 'ð¿', label: 'Native Reforestation', desc: 'Restore native koa and ohia forests' },
+  { icon: 'ðï¸', label: 'Coastal Cleanup', desc: 'Beach cleanups and dune restoration' },
+  { icon: 'ð¾', label: 'Taro Farming', desc: 'Traditional lo\'i kalo restoration' },
+  { icon: 'ð¦', label: 'Wildlife Monitoring', desc: 'Help track endangered Hawaiian species' },
+  { icon: 'ð¢', label: 'Sea Turtle Conservation', desc: 'Protect nesting sites and hatchlings' },
+  { icon: 'ð', label: 'Wetland Restoration', desc: 'Restore native fishponds and wetlands' },
+  { icon: 'ð¦', label: 'Shark Research', desc: 'Tag and track reef sharks for conservation' },
+  { icon: 'ðª¸', label: 'Reef Monitoring', desc: 'Underwater surveys and data collection' },
+  { icon: 'ðº', label: 'Native Garden Planting', desc: 'Grow endemic Hawaiian plants' },
 ];
 
 const leisureActivities = [
-  { icon: '🥾', label: 'Diamond Head Hike', desc: 'Iconic crater trail with panoramic views', category: 'Hiking' },
-  { icon: '⛰️', label: 'Koko Head Stairs', desc: '1,048 steps to a breathtaking summit', category: 'Hiking' },
-  { icon: '🌄', label: 'Manoa Falls Trail', desc: 'Lush rainforest hike to 150ft waterfall', category: 'Hiking' },
-  { icon: '🏔️', label: 'Pillbox Hike (Lanikai)', desc: 'Short hike with stunning Windward views', category: 'Hiking' },
-  { icon: '🐎', label: 'Polo at Hawaii Polo Club', desc: 'Watch or play at the North Shore fields', category: 'Sports' },
-  { icon: '🏄', label: 'Surfing Lessons', desc: 'Learn to ride waves at Waikiki Beach', category: 'Water Sports' },
-  { icon: '🤿', label: 'Snorkeling at Hanauma Bay', desc: 'World-famous reef snorkeling', category: 'Water Sports' },
-  { icon: '🛶', label: 'Outrigger Canoe Paddling', desc: 'Traditional Hawaiian canoe experience', category: 'Water Sports' },
-  { icon: '🪁', label: 'Kitesurfing at Kailua', desc: 'Ride the Windward trade winds', category: 'Water Sports' },
-  { icon: '🐬', label: 'Dolphin Watching', desc: 'Boat tour along the West Coast', category: 'Tours' },
-  { icon: '🌅', label: 'Sunset Sailing', desc: 'Catamaran cruise off Waikiki', category: 'Tours' },
-  { icon: '🚁', label: 'Helicopter Tour', desc: 'See the island from above', category: 'Tours' },
-  { icon: '🔥', label: 'Traditional Luau', desc: 'Feast, hula, and fire dancing', category: 'Culture & Entertainment' },
-  { icon: '🎶', label: 'Ukulele Workshop', desc: 'Learn the iconic Hawaiian instrument', category: 'Culture & Entertainment' },
-  { icon: '💃', label: 'Hula Dancing Lesson', desc: 'Learn traditional and modern hula', category: 'Culture & Entertainment' },
-  { icon: '🎭', label: 'Polynesian Cultural Center', desc: 'Explore cultures of the Pacific Islands', category: 'Culture & Entertainment' },
-  { icon: '🍍', label: 'Dole Plantation Tour', desc: 'Pineapple gardens and the world\'s largest maze', category: 'Food & Drink' },
-  { icon: '🍣', label: 'Local Food Tour', desc: 'Poke, shave ice, plate lunch, and more', category: 'Food & Drink' },
-  { icon: '🍺', label: 'Craft Brewery Tour', desc: 'Sample local Hawaiian-brewed beers', category: 'Food & Drink' },
-  { icon: '🍫', label: 'Chocolate Farm Visit', desc: 'Bean-to-bar tasting on the North Shore', category: 'Food & Drink' },
-  { icon: '🧘', label: 'Beach Yoga', desc: 'Sunrise sessions on the sand', category: 'Wellness' },
-  { icon: '💆', label: 'Lomilomi Massage', desc: 'Traditional Hawaiian healing bodywork', category: 'Wellness' },
-  { icon: '🌿', label: 'Hawaiian Herbal Medicine', desc: 'Learn about la\'au lapa\'au healing plants', category: 'Wellness' },
-  { icon: '🏌️', label: 'Golf at Ko Olina', desc: 'Championship course on the Leeward Coast', category: 'Sports' },
-  { icon: '📸', label: 'Photography Tour', desc: 'Capture stunning landscapes with a guide', category: 'Tours' },
-  { icon: '🛍️', label: 'Aloha Stadium Swap Meet', desc: 'Local crafts, souvenirs, and food stalls', category: 'Shopping' },
-  { icon: '🗿', label: 'Pearl Harbor Memorial', desc: 'Visit the USS Arizona and museum', category: 'History' },
-  { icon: '🏛️', label: 'Iolani Palace Tour', desc: 'The only royal palace in the US', category: 'History' },
-  { icon: '⛩️', label: 'Byodo-In Temple', desc: 'Stunning replica temple in the Valley of the Temples', category: 'History' },
-  { icon: '🌋', label: 'North Shore Day Trip', desc: 'Big waves, shrimp trucks, and sea turtles', category: 'Tours' },
+  { icon: 'ð¥¾', label: 'Diamond Head Hike', desc: 'Iconic crater trail with panoramic views', category: 'Hiking' },
+  { icon: 'â°ï¸', label: 'Koko Head Stairs', desc: '1,048 steps to a breathtaking summit', category: 'Hiking' },
+  { icon: 'ð', label: 'Manoa Falls Trail', desc: 'Lush rainforest hike to 150ft waterfall', category: 'Hiking' },
+  { icon: 'ðï¸', label: 'Pillbox Hike (Lanikai)', desc: 'Short hike with stunning Windward views', category: 'Hiking' },
+  { icon: 'ð', label: 'Polo at Hawaii Polo Club', desc: 'Watch or play at the North Shore fields', category: 'Sports' },
+  { icon: 'ð', label: 'Surfing Lessons', desc: 'Learn to ride waves at Waikiki Beach', category: 'Water Sports' },
+  { icon: 'ð¤¿', label: 'Snorkeling at Hanauma Bay', desc: 'World-famous reef snorkeling', category: 'Water Sports' },
+  { icon: 'ð¶', label: 'Outrigger Canoe Paddling', desc: 'Traditional Hawaiian canoe experience', category: 'Water Sports' },
+  { icon: 'ðª', label: 'Kitesurfing at Kailua', desc: 'Ride the Windward trade winds', category: 'Water Sports' },
+  { icon: 'ð¬', label: 'Dolphin Watching', desc: 'Boat tour along the West Coast', category: 'Tours' },
+  { icon: 'ð', label: 'Sunset Sailing', desc: 'Catamaran cruise off Waikiki', category: 'Tours' },
+  { icon: 'ð', label: 'Helicopter Tour', desc: 'See the island from above', category: 'Tours' },
+  { icon: 'ð¥', label: 'Traditional Luau', desc: 'Feast, hula, and fire dancing', category: 'Culture & Entertainment' },
+  { icon: 'ð¶', label: 'Ukulele Workshop', desc: 'Learn the iconic Hawaiian instrument', category: 'Culture & Entertainment' },
+  { icon: 'ð', label: 'Hula Dancing Lesson', desc: 'Learn traditional and modern hula', category: 'Culture & Entertainment' },
+  { icon: 'ð­', label: 'Polynesian Cultural Center', desc: 'Explore cultures of the Pacific Islands', category: 'Culture & Entertainment' },
+  { icon: 'ð', label: 'Dole Plantation Tour', desc: 'Pineapple gardens and the world\'s largest maze', category: 'Food & Drink' },
+  { icon: 'ð£', label: 'Local Food Tour', desc: 'Poke, shave ice, plate lunch, and more', category: 'Food & Drink' },
+  { icon: 'ðº', label: 'Craft Brewery Tour', desc: 'Sample local Hawaiian-brewed beers', category: 'Food & Drink' },
+  { icon: 'ð«', label: 'Chocolate Farm Visit', desc: 'Bean-to-bar tasting on the North Shore', category: 'Food & Drink' },
+  { icon: 'ð§', label: 'Beach Yoga', desc: 'Sunrise sessions on the sand', category: 'Wellness' },
+  { icon: 'ð', label: 'Lomilomi Massage', desc: 'Traditional Hawaiian healing bodywork', category: 'Wellness' },
+  { icon: 'ð¿', label: 'Hawaiian Herbal Medicine', desc: 'Learn about la\'au lapa\'au healing plants', category: 'Wellness' },
+  { icon: 'ðï¸', label: 'Golf at Ko Olina', desc: 'Championship course on the Leeward Coast', category: 'Sports' },
+  { icon: 'ð¸', label: 'Photography Tour', desc: 'Capture stunning landscapes with a guide', category: 'Tours' },
+  { icon: 'ðï¸', label: 'Aloha Stadium Swap Meet', desc: 'Local crafts, souvenirs, and food stalls', category: 'Shopping' },
+  { icon: 'ð¿', label: 'Pearl Harbor Memorial', desc: 'Visit the USS Arizona and museum', category: 'History' },
+  { icon: 'ðï¸', label: 'Iolani Palace Tour', desc: 'The only royal palace in the US', category: 'History' },
+  { icon: 'â©ï¸', label: 'Byodo-In Temple', desc: 'Stunning replica temple in the Valley of the Temples', category: 'History' },
+  { icon: 'ð', label: 'North Shore Day Trip', desc: 'Big waves, shrimp trucks, and sea turtles', category: 'Tours' },
 ];
 
-const leisureCategories = [...new Set(leisureActivities.map(a => a.category))];
+const leisureCategories = Array.from(new Set(leisureActivities.map(a => a.category)));
 
 export default function ItineraryPage() {
   const [step, setStep] = useState(1);
@@ -94,7 +94,7 @@ export default function ItineraryPage() {
               {/* Regenerative Activities */}
               <div className="bg-white rounded-xl shadow-sm border p-8">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">🌱</span>
+                  <span className="text-2xl">ð±</span>
                   <h2 className="text-xl font-semibold text-gray-900">Regenerative & Eco Activities</h2>
                 </div>
                 <p className="text-sm text-gray-500 mb-6">These experiences directly contribute to Hawaii\'s environmental and cultural restoration. Your participation creates measurable positive impact.</p>
@@ -122,7 +122,7 @@ export default function ItineraryPage() {
               {/* Leisure & Culture Activities */}
               <div className="bg-white rounded-xl shadow-sm border p-8">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">🌴</span>
+                  <span className="text-2xl">ð´</span>
                   <h2 className="text-xl font-semibold text-gray-900">Leisure, Culture & Adventure</h2>
                 </div>
                 <p className="text-sm text-gray-500 mb-6">Round out your itinerary with the best of Oahu. These activities can be seamlessly woven into your trip alongside your eco experiences.</p>
@@ -294,9 +294,9 @@ export default function ItineraryPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Early bird or night owl?</label>
                   <div className="flex gap-3">
-                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">🌅 Early Riser</button>
-                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">☀️ Mid-Morning</button>
-                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">🌙 Night Owl</button>
+                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">ð Early Riser</button>
+                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">âï¸ Mid-Morning</button>
+                    <button className="flex-1 py-2 border-2 border-gray-200 rounded-lg text-sm hover:border-teal-500 hover:bg-teal-50 transition">ð Night Owl</button>
                   </div>
                 </div>
                 <div>
@@ -315,7 +315,7 @@ export default function ItineraryPage() {
               <div className="flex gap-3 mt-8">
                 <button onClick={() => setStep(2)} className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">Back</button>
                 <button className="flex-1 bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition flex items-center justify-center gap-2">
-                  <span>✨</span> Generate My Itinerary
+                  <span>â¨</span> Generate My Itinerary
                 </button>
               </div>
             </div>
