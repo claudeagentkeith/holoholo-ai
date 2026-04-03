@@ -70,11 +70,17 @@ export default function ItineraryPage() {
     setSelectedLeisure(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]);
   };
 
-  const searchWords = searchQuery.toLowerCase().split(/[\s,]+/).filter(w => w.length > 0);
+  const stopWords = ['and', 'or', 'the', 'a', 'an', 'to', 'in', 'for', 'of', 'with', 'on', 'at'];
+  const searchWords = searchQuery.toLowerCase().split(/[\s,]+/).filter(w => w.length > 1 && !stopWords.includes(w));
   const matchesSearch = (text: string) => {
     if (searchWords.length === 0) return true;
     const lower = text.toLowerCase();
-    return searchWords.some(word => lower.includes(word));
+    return searchWords.some(word => {
+      if (lower.includes(word)) return true;
+      // Check if any word in the text starts with the search term (or vice versa)
+      const textWords = lower.split(/\s+/);
+      return textWords.some(tw => tw.startsWith(word) || word.startsWith(tw));
+    });
   };
   const filteredRegen = regenActivities.filter(a =>
     matchesSearch(a.label) || matchesSearch(a.desc)
@@ -112,7 +118,7 @@ export default function ItineraryPage() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="List everything you want to do — e.g. luau beaches and hikes"
+                  placeholder="List everything you want to do â e.g. luau beaches and hikes"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-lg"
