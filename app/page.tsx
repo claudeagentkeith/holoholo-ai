@@ -39,9 +39,9 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">{t('home.howItWorks')}</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: '\uD83C\uDF0D', titleKey: 'how_step1_title', descKey: 'how_step1_desc' },
-              { icon: '\uD83C\uDF3F', titleKey: 'how_step2_title', descKey: 'how_step2_desc' },
-              { icon: '\u2728', titleKey: 'how_step3_title', descKey: 'how_step3_desc' },
+              { icon: '\uD83C\uDF0D', titleKey: 'home.step1.title', descKey: 'home.step1.desc' },
+              { icon: '\uD83C\uDF3F', titleKey: 'home.step2.title', descKey: 'home.step2.desc' },
+              { icon: '\u2728', titleKey: 'home.step3.title', descKey: 'home.step3.desc' },
             ].map((step, i) => (
               <div key={i} className="text-center p-8 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-5xl mb-4">{step.icon}</div>
