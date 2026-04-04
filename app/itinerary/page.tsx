@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from '../../lib/i18n';
+
 import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -54,6 +56,8 @@ const leisureActivities = [
 const neighborhoods = ['Waikiki', 'North Shore', 'Ko Olina', 'Kailua', 'Honolulu', 'Lanikai', 'Haleiwa', 'Kapolei'];
 
 export default function ItineraryPage() {
+  const { t } = useTranslation();
+
   const [step, setStep] = useState(1);
   const [selectedRegen, setSelectedRegen] = useState<string[]>([]);
   const [selectedLeisure, setSelectedLeisure] = useState<string[]>([]);
@@ -95,10 +99,10 @@ export default function ItineraryPage() {
   return (
     <>
       <Header />
-      <UnderConstruction message="AI itinerary generation coming soon! This is a preview of the experience." />
+      <UnderConstruction message={t("uc.itinerary")} />
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-2">Generate Your Itinerary</h1>
-        <p className="text-gray-600 mb-8">Tell us about your trip and our AI will craft a personalized regenerative tourism experience.</p>
+        <h1 className="text-3xl font-bold mb-2">{t("itin.title")}</h1>
+        <p className="text-gray-600 mb-8">{t("itin.subtitle")}</p>
 
         {/* Step Indicator */}
         <div className="flex items-center mb-8">
@@ -118,7 +122,7 @@ export default function ItineraryPage() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="List everything you want to do â e.g. luau beaches and hikes"
+                  placeholder={t("itin.search.placeholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none text-lg"
@@ -132,7 +136,7 @@ export default function ItineraryPage() {
               </div>
               {searchQuery && (
                 <p className="mt-2 text-sm text-gray-500">
-                  Showing {filteredRegen.length + filteredLeisure.length} matching activities
+                  {t("itin.search.showing")} {filteredRegen.length + filteredLeisure.length} {t("itin.search.matchingActivities")}
                 </p>
               )}
             </div>
