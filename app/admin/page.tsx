@@ -5,6 +5,8 @@ import { StatusPill } from "@/components/status-pill";
 import { adminStats } from "@/lib/mock/dashboard";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   let stats = adminStats;
   let recentTrips: Array<{
@@ -15,50 +17,54 @@ export default async function AdminPage() {
     createdAt: Date;
   }> = [];
 
-  if (prisma) {
-    const [totalTrips, activeTrips, queuedBookings, pendingSignals, trips] = await Promise.all([
-      prisma.trip.count(),
-      prisma.trip.count({
-        where: {
-          tripStatus: {
-            in: ["REQUESTED", "GENERATING", "VERIFYING", "PRELIMINARY_SET", "FINAL_CONFIRM_PENDING", "BOOKING", "BOOKED", "MONITORING"]
+  try {
+    if (prisma) {
+      const [totalTrips, activeTrips, queuedBookings, pendingSignals, trips] = await Promise.all([
+        prisma.trip.count(),
+        prisma.trip.count({
+          where: {
+            tripStatus: {
+              in: ["REQUESTED", "GENERATING", "VERIFYING", "PRELIMINARY_SET", "FINAL_CONFIRM_PENDING", "BOOKING", "BOOKED", "MONITORING"]
+            }
           }
-        }
-      }),
-      prisma.booking.count({
-        where: {
-          status: {
-            in: ["PENDING", "IN_PROGRESS"]
+        }),
+        prisma.booking.count({
+          where: {
+            status: {
+              in: ["PENDING", "IN_PROGRESS"]
+            }
           }
-        }
-      }),
-      prisma.riskSignal.count({
-        where: {
-          status: "OPEN"
-        }
-      }),
-      prisma.trip.findMany({
-        orderBy: {
-          createdAt: "desc"
-        },
-        take: 10,
-        select: {
-          id: true,
-          travelerName: true,
-          travelerEmail: true,
-          tripStatus: true,
-          createdAt: true
-        }
-      })
-    ]);
+        }),
+        prisma.riskSignal.count({
+          where: {
+            status: "OPEN"
+          }
+        }),
+        prisma.trip.findMany({
+          orderBy: {
+            createdAt: "desc"
+          },
+          take: 10,
+          select: {
+            id: true,
+            travelerName: true,
+            travelerEmail: true,
+            tripStatus: true,
+            createdAt: true
+          }
+        })
+      ]);
 
-    stats = {
-      totalTrips,
-      activeTrips,
-      queuedBookings,
-      pendingSignals
-    };
-    recentTrips = trips;
+      stats = {
+        totalTrips,
+        activeTrips,
+        queuedBookings,
+        pendingSignals
+      };
+      recentTrips = trips;
+    }
+  } catch (e) {
+    console.error("Database not available:", e);
   }
 
   return (
@@ -80,7 +86,7 @@ export default async function AdminPage() {
         <h2 className="text-xl font-semibold text-volcanic">Inventory strategy</h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
           The biggest Oʻahu launch risk is not itinerary generation — it is public-source coverage. The new PRD #4 registry scores
-          bookable activities, luaus, hikes, dining, event feeds, and fallback marketplaces by how well they fit the framework without
+          bookable activities, luʻaus, hikes, dining, event feeds, and fallback marketplaces by how well they fit the framework without
           asking suppliers to customize anything.
         </p>
         <div className="mt-4">
