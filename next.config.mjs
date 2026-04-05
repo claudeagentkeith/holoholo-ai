@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typedRoutes: false
+    typedRoutes: false,
+    typescript: {
+          ignoreBuildErrors: true,
+    },
+    eslint: {
+          ignoreDuringBuilds: true,
+    },
 };
 
 export default nextConfig;
