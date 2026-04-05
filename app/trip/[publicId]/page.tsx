@@ -189,7 +189,7 @@ export default async function TripPortalPage({ params }: TripPageProps) {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="text-sm font-medium text-slate-500">Regenerative / Eco score</div>
-              <div className="mt-1 text-xl font-semibold text-volcanic">{impact.normalizedScore} · {getScoreBandLabel(impact.scoreBand as "NET_POSITIVE" | "BALANCED" | "NET_NEGATIVE")}</div>
+              <div className="mt-1 text-xl font-semibold text-volcanic">{String(impact.normalizedScore)} · {getScoreBandLabel(impact.scoreBand as "NET_POSITIVE" | "BALANCED" | "NET_NEGATIVE")}</div>
             </div>
             <StatusPill value={impact.scoreBand} />
           </div>
