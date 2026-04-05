@@ -2,19 +2,21 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = {
-  params: {
+  params: Promise<{
     assessmentId: string;
     recipientId: string;
-  };
+  }>;
 };
 
 export async function GET(_request: Request, { params }: RouteContext) {
+  const { assessmentId, recipientId } = await params;
+
   if (!prisma) {
     return NextResponse.redirect("https://example.com", { status: 302 });
   }
 
   const recipient = await prisma.donationRecipient.findUnique({
-    where: { id: params.recipientId }
+    where: { id: recipientId }
   });
 
   if (!recipient) {
@@ -22,7 +24,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
   }
 
   const assessment = await prisma.tripImpactAssessment.findUnique({
-    where: { id: params.assessmentId }
+    where: { id: assessmentId }
   });
 
   if (assessment) {

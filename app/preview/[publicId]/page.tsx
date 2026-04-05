@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { ProceedToDepositButton } from "@/components/proceed-to-deposit-button";
 import { SectionTitle } from "@/components/section-title";
 import { StatCard } from "@/components/stat-card";
@@ -8,12 +10,14 @@ import { formatPreferenceSummary, parsePreferencePayload } from "@/lib/preferenc
 import { prisma } from "@/lib/prisma";
 
 type PreviewPageProps = {
-  params: {
+  params: Promise<{
     publicId: string;
-  };
+  }>;
 };
 
 export default async function PreviewPage({ params }: PreviewPageProps) {
+  const { publicId } = await params;
+
   if (!prisma) {
     return (
       <div className="page-shell">
@@ -23,7 +27,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
   }
 
   const preview = await prisma.previewSession.findUnique({
-    where: { publicId: params.publicId },
+    where: { publicId },
     include: {
       trip: {
         select: {

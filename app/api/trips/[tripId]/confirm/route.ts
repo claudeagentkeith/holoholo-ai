@@ -2,19 +2,21 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = {
-  params: {
+  params: Promise<{
     tripId: string;
-  };
+  }>;
 };
 
 export async function POST(_request: Request, { params }: RouteContext) {
+  const { tripId } = await params;
+
   if (!prisma) {
     return NextResponse.json({ error: "DATABASE_URL is not configured." }, { status: 500 });
   }
 
   try {
     const trip = await prisma.trip.findUnique({
-      where: { id: params.tripId },
+      where: { id: tripId },
       include: {
         versions: {
           orderBy: { versionNumber: "desc" },

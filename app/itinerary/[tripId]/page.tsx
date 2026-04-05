@@ -1,14 +1,18 @@
+export const dynamic = "force-dynamic";
+
 import { ItineraryTimeline, type TimelineItem } from "@/components/itinerary-timeline";
 import { SectionTitle } from "@/components/section-title";
 import { prisma } from "@/lib/prisma";
 
 type ItineraryPageProps = {
-  params: {
+  params: Promise<{
     tripId: string;
-  };
+  }>;
 };
 
 export default async function InternalItineraryPage({ params }: ItineraryPageProps) {
+  const { tripId } = await params;
+
   if (!prisma) {
     return (
       <div className="page-shell">
@@ -18,7 +22,7 @@ export default async function InternalItineraryPage({ params }: ItineraryPagePro
   }
 
   const trip = await prisma.trip.findUnique({
-    where: { id: params.tripId },
+    where: { id: tripId },
     include: {
       versions: {
         orderBy: { versionNumber: "desc" },

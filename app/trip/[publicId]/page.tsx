@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { AutoGenerateItinerary } from "@/components/auto-generate-itinerary";
 import { ConfirmItineraryButton } from "@/components/confirm-itinerary-button";
 import { GenerateItineraryButton } from "@/components/generate-itinerary-button";
@@ -11,12 +13,14 @@ import { formatPreferenceSummary, parsePreferencePayload } from "@/lib/preferenc
 import { prisma } from "@/lib/prisma";
 
 type TripPageProps = {
-  params: {
+  params: Promise<{
     publicId: string;
-  };
+  }>;
 };
 
 export default async function TripPortalPage({ params }: TripPageProps) {
+  const { publicId } = await params;
+
   if (!prisma) {
     return (
       <div className="page-shell">
@@ -29,7 +33,7 @@ export default async function TripPortalPage({ params }: TripPageProps) {
   }
 
   const trip = await prisma.trip.findUnique({
-    where: { publicId: params.publicId },
+    where: { publicId },
     include: {
       previewSession: {
         select: { publicId: true }
@@ -146,7 +150,7 @@ export default async function TripPortalPage({ params }: TripPageProps) {
           <StatCard
             label="Regenerative / Eco"
             value={getScoreBandLabel(impact?.scoreBand as "NET_POSITIVE" | "BALANCED" | "NET_NEGATIVE" | null)}
-            hint={impact ? `${impact.normalizedScore} score` : "Revealed after the deposit"}
+            hint={impact ? `${Number(impact.normalizedScore)} score` : "Revealed after the deposit"}
           />
         </div>
       </section>
@@ -189,7 +193,7 @@ export default async function TripPortalPage({ params }: TripPageProps) {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="text-sm font-medium text-slate-500">Regenerative / Eco score</div>
-              <div className="mt-1 text-xl font-semibold text-volcanic">{String(impact.normalizedScore)} · {getScoreBandLabel(impact.scoreBand as "NET_POSITIVE" | "BALANCED" | "NET_NEGATIVE")}</div>
+              <div className="mt-1 text-xl font-semibold text-volcanic">{Number(impact.normalizedScore)} · {getScoreBandLabel(impact.scoreBand as "NET_POSITIVE" | "BALANCED" | "NET_NEGATIVE")}</div>
             </div>
             <StatusPill value={impact.scoreBand} />
           </div>

@@ -1,4 +1,5 @@
 import { addMinutes, compareAsc, format, isSameDay } from "date-fns";
+import type { Prisma } from "@prisma/client";
 import { getAnthropic } from "@/lib/anthropic";
 import { enumerateTripDates } from "@/lib/date";
 import { deriveImpactAssessment } from "@/lib/impact";
@@ -590,7 +591,7 @@ export async function generateMaskedPreviewForPreviewSession(previewId: string) 
   const result = await prisma.previewSession.update({
     where: { id: preview.id },
     data: {
-      maskedSummary,
+      maskedSummary: maskedSummary as Prisma.InputJsonValue,
       maskedPriceEstimateMin,
       maskedPriceEstimateMax,
       scoreBand: impact.scoreBand,
@@ -709,8 +710,8 @@ export async function generateDraftForTrip(tripId: string) {
           holdType: (item.holdType as "NONE" | "SOFT_VERIFY" | "CART_HOLD" | "HARD_HOLD" | "MANUAL_ASSIST" | undefined) ?? "SOFT_VERIFY",
           holdExpiresAt: item.holdExpiresAt ?? null,
           verificationStatus: item.verificationStatus,
-          maskedPreviewPayload: item.maskedPreviewPayload ?? {},
-          metadata: item.metadata ?? {}
+          maskedPreviewPayload: (item.maskedPreviewPayload ?? {}) as Prisma.InputJsonValue,
+          metadata: (item.metadata ?? {}) as Prisma.InputJsonValue
         }
       });
       orderIndex += 1;

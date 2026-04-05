@@ -12,9 +12,13 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
+    "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "latest",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/pg": "^8.20.0",
     "date-fns": "latest",
     "next": "latest",
+    "pg": "^8.20.0",
     "react": "latest",
     "react-dom": "latest",
     "stripe": "latest",

@@ -1,6 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-ocean-500: #0077B6;
+  --color-ocean-700: #023E8A;
+  --color-ocean-800: #012e6b;
+  --color-volcanic: #1A1A2E;
+  --color-plumeria: #FAFAFA;
+  --color-coral: #FF6B6B;
+  --color-sand: #F6F1E9;
+  --color-leaf: #356859;
+  --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
 
 :root {
   color-scheme: light;

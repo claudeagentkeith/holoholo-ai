@@ -3,19 +3,21 @@ import { getPlanningDepositAmount } from "@/lib/pricing";
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = {
-  params: {
+  params: Promise<{
     publicId: string;
-  };
+  }>;
 };
 
 export async function POST(_request: Request, { params }: RouteContext) {
+  const { publicId } = await params;
+
   if (!prisma) {
     return NextResponse.json({ error: "DATABASE_URL is not configured." }, { status: 500 });
   }
 
   try {
     const preview = await prisma.previewSession.findUnique({
-      where: { publicId: params.publicId },
+      where: { publicId },
       include: {
         trip: true
       }
