@@ -6,8 +6,6 @@ import { StatusPill } from "@/components/status-pill";
 import { adminStats } from "@/lib/mock/dashboard";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
 export default async function AdminPage() {
   let stats = adminStats;
   let recentTrips: Array<{
