@@ -23,6 +23,10 @@ const regenActivities = [
   { label: 'Frankie\'s Nursery', desc: 'Family-run tropical fruit nursery and farm tours in Waimanalo', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&h=80&fit=crop' },
   { label: 'Gunstock Ranch', desc: 'Multi-generational family ranch with horseback riding and farm-to-table dining', image: 'https://images.unsplash.com/photo-1516367480789-5d2e7b1e7e0e?w=80&h=80&fit=crop' },
   { label: 'Waimea Valley', desc: 'Community-supported botanical garden and cultural preserve', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=80&h=80&fit=crop' },
+  { label: 'Kuilima Farm', desc: 'HTA-accredited 468-acre regenerative farm at Turtle Bay with guided agricultural tours', image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=80&h=80&fit=crop' },
+  { label: 'North Shore EcoTours', desc: 'HTA-accredited Native Hawaiian-owned eco-tours through private conservation land in Haleiwa', image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=80&h=80&fit=crop' },
+  { label: 'Kahumana Organic Farm', desc: 'Certified organic farm in Lualualei Valley since 1978 with permaculture tours and cafe', image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c8b32?w=80&h=80&fit=crop' },
+  { label: 'Paepae o He\'eia', desc: 'Restore an ancient Hawaiian fishpond in Kaneohe through hands-on community work days', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=80&h=80&fit=crop' },
 ];
 
 const leisureActivities = [
