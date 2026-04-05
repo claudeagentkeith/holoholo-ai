@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import { SectionTitle } from "@/components/section-title";
@@ -87,8 +86,8 @@ export default async function AdminPage() {
       <section className="card p-6">
         <h2 className="text-xl font-semibold text-volcanic">Inventory strategy</h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-          The biggest Oʻahu launch risk is not itinerary generation — it is public-source coverage. The new PRD #4 registry scores
-          bookable activities, luʻaus, hikes, dining, event feeds, and fallback marketplaces by how well they fit the framework without
+          The biggest OÊ»ahu launch risk is not itinerary generation â it is public-source coverage. The new PRD #4 registry scores
+          bookable activities, luÊ»aus, hikes, dining, event feeds, and fallback marketplaces by how well they fit the framework without
           asking suppliers to customize anything.
         </p>
         <div className="mt-4">
