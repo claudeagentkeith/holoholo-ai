@@ -18,6 +18,11 @@ const regenActivities = [
   { label: 'Shark Research', desc: 'Tag and track reef sharks for conservation', image: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=80&h=80&fit=crop' },
   { label: 'Reef Monitoring', desc: 'Underwater surveys and data collection', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=80&h=80&fit=crop' },
   { label: 'Native Garden Planting', desc: 'Grow endemic Hawaiian plants', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&h=80&fit=crop' },
+  { label: 'Kahuku Farms Tour', desc: 'Family-owned North Shore farm tour with tropical fruit tasting and smoothie bar', image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=80&h=80&fit=crop' },
+  { label: 'Ma\'o Organic Farms', desc: 'Youth-led organic farm in Waianae supporting community food sovereignty', image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=80&h=80&fit=crop' },
+  { label: 'Frankie\'s Nursery', desc: 'Family-run tropical fruit nursery and farm tours in Waimanalo', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&h=80&fit=crop' },
+  { label: 'Gunstock Ranch', desc: 'Multi-generational family ranch with horseback riding and farm-to-table dining', image: 'https://images.unsplash.com/photo-1516367480789-5d2e7b1e7e0e?w=80&h=80&fit=crop' },
+  { label: 'Waimea Valley', desc: 'Community-supported botanical garden and cultural preserve', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=80&h=80&fit=crop' },
 ];
 
 const leisureActivities = [
