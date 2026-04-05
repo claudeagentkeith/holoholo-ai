@@ -1,102 +1,130 @@
-'use client';
+import Link from "next/link";
+import { SectionTitle } from "@/components/section-title";
+import { StatCard } from "@/components/stat-card";
+import { StatusPill } from "@/components/status-pill";
+import { adminStats } from "@/lib/mock/dashboard";
+import { prisma } from "@/lib/prisma";
 
-import { useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import UnderConstruction from '../../components/UnderConstruction';
+export default async function AdminPage() {
+  let stats = adminStats;
+  let recentTrips: Array<{
+    id: string;
+    travelerName: string;
+    travelerEmail: string;
+    tripStatus: string;
+    createdAt: Date;
+  }> = [];
 
-export default function AdminDashboard() {
-  const stats = [
-    { label: 'Active Operators', value: '12', change: '+2 this month' },
-    { label: 'Total Experiences', value: '48', change: '+5 this month' },
-    { label: 'Bookings This Month', value: '156', change: '+23% vs last month' },
-    { label: 'Impact Score', value: '94.2', change: 'Top 5% globally' },
-  ];
+  if (prisma) {
+    const [totalTrips, activeTrips, queuedBookings, pendingSignals, trips] = await Promise.all([
+      prisma.trip.count(),
+      prisma.trip.count({
+        where: {
+          tripStatus: {
+            in: ["REQUESTED", "GENERATING", "VERIFYING", "PRELIMINARY_SET", "FINAL_CONFIRM_PENDING", "BOOKING", "BOOKED", "MONITORING"]
+          }
+        }
+      }),
+      prisma.booking.count({
+        where: {
+          status: {
+            in: ["PENDING", "IN_PROGRESS"]
+          }
+        }
+      }),
+      prisma.riskSignal.count({
+        where: {
+          status: "OPEN"
+        }
+      }),
+      prisma.trip.findMany({
+        orderBy: {
+          createdAt: "desc"
+        },
+        take: 10,
+        select: {
+          id: true,
+          travelerName: true,
+          travelerEmail: true,
+          tripStatus: true,
+          createdAt: true
+        }
+      })
+    ]);
 
-  const bookings = [
-    { id: 'BK-001', exp: 'Reef Restoration', date: '2026-04-01', guests: 4, status: 'Confirmed' },
-    { id: 'BK-002', exp: 'Taro Farming Workshop', date: '2026-04-02', guests: 2, status: 'Pending' },
-    { id: 'BK-003', exp: 'Native Reforestation', date: '2026-04-03', guests: 6, status: 'Confirmed' },
-    { id: 'BK-004', exp: 'Cultural Navigation', date: '2026-04-04', guests: 3, status: 'Cancelled' },
-  ];
+    stats = {
+      totalTrips,
+      activeTrips,
+      queuedBookings,
+      pendingSignals
+    };
+    recentTrips = trips;
+  }
 
   return (
-    <>
-      <Header />
-      <UnderConstruction message="Admin dashboard with live data coming soon. Showing sample layout." />
-      <main className="min-h-screen bg-gray-50 p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          {stats.map(s => (
-            <div key={s.label} className="bg-white rounded-lg border p-5">
-              <p className="text-sm text-gray-500">{s.label}</p>
-              <p className="text-3xl font-bold text-gray-900">{s.value}</p>
-              <p className="text-sm text-teal-600">{s.change}</p>
-            </div>
-          ))}
+    <div className="page-shell space-y-8">
+      <SectionTitle
+        eyebrow="Internal operations"
+        title="Admin overview"
+        description="This page is intentionally light. The next layer now includes a curated PRD #4 source registry, and later should add extraction-confidence review, manual overrides, source health, and replan approval history."
+      />
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="Total trips" value={String(stats.totalTrips)} />
+        <StatCard label="Active trips" value={String(stats.activeTrips)} />
+        <StatCard label="Queued bookings" value={String(stats.queuedBookings)} />
+        <StatCard label="Open signals" value={String(stats.pendingSignals)} />
+      </section>
+
+      <section className="card p-6">
+        <h2 className="text-xl font-semibold text-volcanic">Inventory strategy</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+          The biggest Oʻahu launch risk is not itinerary generation — it is public-source coverage. The new PRD #4 registry scores
+          bookable activities, luaus, hikes, dining, event feeds, and fallback marketplaces by how well they fit the framework without
+          asking suppliers to customize anything.
+        </p>
+        <div className="mt-4">
+          <Link href="/admin/sources" className="inline-flex items-center rounded-full bg-ocean-700 px-4 py-2 text-sm font-medium text-white no-underline hover:bg-ocean-800">
+            Open PRD #4 source registry
+          </Link>
         </div>
-        <div className="bg-white rounded-lg border p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">Recent Bookings</h2>
-          <table className="w-full text-left">
-            <thead><tr className="border-b text-sm text-gray-500">
-              <th className="pb-2">ID</th><th className="pb-2">Experience</th><th className="pb-2">Date</th><th className="pb-2">Guests</th><th className="pb-2">Status</th>
-            </tr></thead>
+      </section>
+
+      <section className="card p-6">
+        <h2 className="text-xl font-semibold text-volcanic">Recent trips</h2>
+        <div className="mt-4 overflow-x-auto">
+          <table className="min-w-full text-left text-sm">
+            <thead className="text-slate-500">
+              <tr>
+                <th className="px-3 py-2">Traveler</th>
+                <th className="px-3 py-2">Email</th>
+                <th className="px-3 py-2">Created</th>
+                <th className="px-3 py-2">Status</th>
+              </tr>
+            </thead>
             <tbody>
-              {bookings.map(b => (
-                <tr key={b.id} className="border-b last:border-0">
-                  <td className="py-3 text-sm">{b.id}</td>
-                  <td className="py-3 text-sm">{b.exp}</td>
-                  <td className="py-3 text-sm">{b.date}</td>
-                  <td className="py-3 text-sm text-center">{b.guests}</td>
-                  <td className="py-3"><span className={`text-xs px-2 py-1 rounded-full font-medium ${b.status === 'Confirmed' ? 'bg-green-100 text-green-700' : b.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>{b.status}</span></td>
+              {recentTrips.length ? (
+                recentTrips.map((trip) => (
+                  <tr key={trip.id} className="border-t border-slate-200">
+                    <td className="px-3 py-3 font-medium text-volcanic">{trip.travelerName}</td>
+                    <td className="px-3 py-3 text-slate-600">{trip.travelerEmail}</td>
+                    <td className="px-3 py-3 text-slate-600">{trip.createdAt.toLocaleDateString()}</td>
+                    <td className="px-3 py-3">
+                      <StatusPill value={trip.tripStatus} />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="px-3 py-3 text-slate-600" colSpan={4}>
+                    No trips yet. Seed and create a request from the landing page.
+                  </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
-        
-        {/* New: Analytics preview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white rounded-lg border p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Booking Trends</h3>
-            <div className="space-y-3">
-              {['Jan', 'Feb', 'Mar', 'Apr'].map((month, i) => (
-                <div key={month} className="flex items-center gap-3">
-                  <span className="text-sm text-gray-500 w-8">{month}</span>
-                  <div className="flex-1 bg-gray-100 rounded-full h-4">
-                    <div className="bg-teal-500 h-4 rounded-full" style={{ width: `${[45, 60, 78, 92][i]}%` }} />
-                  </div>
-                  <span className="text-sm text-gray-600 w-8">{[18, 24, 31, 37][i]}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white rounded-lg border p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Impact Metrics</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-3 bg-teal-50 rounded-lg">
-                <p className="text-2xl font-bold text-teal-700">2,450</p>
-                <p className="text-xs text-gray-600">Trees Planted</p>
-              </div>
-              <div className="text-center p-3 bg-blue-50 rounded-lg">
-                <p className="text-2xl font-bold text-blue-700">890</p>
-                <p className="text-xs text-gray-600">Coral Fragments</p>
-              </div>
-              <div className="text-center p-3 bg-amber-50 rounded-lg">
-                <p className="text-2xl font-bold text-amber-700">156</p>
-                <p className="text-xs text-gray-600">Cultural Sessions</p>
-              </div>
-              <div className="text-center p-3 bg-green-50 rounded-lg">
-                <p className="text-2xl font-bold text-green-700">12 tons</p>
-                <p className="text-xs text-gray-600">Debris Removed</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <p className="text-center text-gray-400 text-sm">Dashboard showing mock data. Connect database for live stats.</p>
-      </main>
-      <Footer />
-    </>
+      </section>
+    </div>
   );
 }

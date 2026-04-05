@@ -1,26 +1,31 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import Providers from '../components/Providers';
-
-const inter = Inter({ subsets: ['latin'] });
+import "./globals.css";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Holoholo.ai - Regenerative Tourism in Hawaii',
-  description: 'Experience Hawaii through regenerative tourism. Give back to the land, ocean, and communities while creating unforgettable memories.',
+  title: "Oʻahu Itinerary Concierge",
+  description: "Deposit-first itinerary planning scaffold for bookable Oʻahu experiences."
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          {children}
-        </Providers>
+      <body>
+        <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
+          <div className="page-shell flex items-center justify-between py-4">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-ocean-700">
+                Oʻahu pilot
+              </div>
+              <div className="text-lg font-semibold text-volcanic">Itinerary Concierge</div>
+            </div>
+            <nav className="flex gap-4 text-sm text-slate-600">
+              <a href="/">Plan a trip</a>
+              <a href="/admin">Admin</a>
+              <a href="/operator/dashboard">Operator</a>
+            </nav>
+          </div>
+        </header>
+        <main>{children}</main>
       </body>
     </html>
   );

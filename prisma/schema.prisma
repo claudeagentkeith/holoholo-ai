@@ -1,11 +1,19 @@
+// holoholo.ai — Oʻahu V1.1 baseline schema
+// Target: PostgreSQL + Prisma
+// Purpose:
+// - Supports masked previews before deposit
+// - Supports deposit + service-fee model for activities/events only
+// - Supports preliminary set / final confirm / booking / monitoring lifecycle
+// - Supports a single Regenerative/Eco score with island-specific donation-link suggestions
+// - Supports traveler-approved change requests and operational notifications
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Island {
@@ -13,145 +21,712 @@ enum Island {
   MAUI
   BIG_ISLAND
   KAUAI
+  MOLOKAI
+  LANAI
 }
 
-enum Category {
+enum SupplierStatus {
+  PUBLIC_ONLY
+  VERIFIED
+  PARTNERED
+  PAUSED
+}
+
+enum ProductType {
+  ACTIVITY
+  LUAU
+  DINING
+  EVENT
   CULTURAL
-  ECOLOGICAL
-  CULINARY
-  ADVENTURE
-  WELLNESS
-  EDUCATIONAL
+  REGENERATIVE
 }
 
-enum AvailabilityType {
-  DAILY
-  WEEKDAYS
-  WEEKENDS
-  CUSTOM
+enum PricingModel {
+  PER_PERSON
+  PER_TABLE
+  FIXED
 }
 
-enum BudgetTier {
-  BUDGET
-  MID
-  PREMIUM
+enum SourceType {
+  DIRECT_WEBSITE
+  EMBEDDED_WIDGET
+  RESTAURANT_RESERVATION
+  EVENT_TICKET_PAGE
+  AGGREGATOR_PAGE
+  CALENDAR_FEED
+}
+
+enum BookingMethod {
+  DEEP_LINK
+  AUTOMATED_BROWSER_FLOW
+  SUPPLIER_HANDOFF
+  ASSISTED_MANUAL
+}
+
+enum SnapshotStatus {
+  FRESH
+  STALE
+  FAILED
+}
+
+enum VerificationStatus {
+  PROPOSED
+  VERIFIED
+  STALE
+  BLOCKED
+}
+
+enum HoldType {
+  NONE
+  SOFT_VERIFY
+  CART_HOLD
+  HARD_HOLD
+  MANUAL_ASSIST
+}
+
+enum PreviewStatus {
+  REQUESTED
+  GENERATING
+  READY
+  CONVERTED
+  EXPIRED
+  ABANDONED
+}
+
+enum ScoreBand {
+  NET_POSITIVE
+  BALANCED
+  NET_NEGATIVE
 }
 
 enum TripStatus {
-  DRAFT
-  GENERATED
+  REQUESTED
+  GENERATING
+  VERIFYING
+  DRAFT_READY
+  PRELIMINARY_SET
+  FINAL_CONFIRM_PENDING
+  BOOKING
   BOOKED
-  CONFIRMED
+  MONITORING
   COMPLETED
   CANCELLED
+  EXPIRED
+}
+
+enum TripVersionStatus {
+  DRAFT
+  VERIFYING
+  PRELIMINARY_SET
+  READY_TO_CONFIRM
+  SUPERSEDED
+  ARCHIVED
+}
+
+enum ItineraryItemType {
+  BOOKABLE_ITEM
+  FREE_TIME
+}
+
+enum ItineraryItemStatus {
+  PROPOSED
+  VERIFIED
+  PRELIMINARY_SET
+  BOOKING_REQUIRED
+  BOOKED
+  AT_RISK
+  REPLACED
+  CANCELLED
+}
+
+enum PrebookingStatus {
+  NONE
+  SOFT_VERIFIED
+  CART_HELD
+  HARD_HELD
+  EXPIRED
+  FAILED
 }
 
 enum BookingStatus {
   PENDING
-  CONFIRMED
+  IN_PROGRESS
+  BOOKED
+  FAILED
   CANCELLED
-  COMPLETED
-  NO_SHOW
+  REFUNDED
 }
 
-enum ExperienceStatus {
-  ACTIVE
-  PAUSED
-  ARCHIVED
+enum PaymentKind {
+  DEPOSIT
+  SERVICE_FEE_BALANCE
+  CHANGE_FEE
+  ADJUSTMENT
 }
 
-enum MetricType {
-  TREES_PLANTED
-  REEF_RESTORED_SQFT
-  CULTURAL_HOURS
-  LOCAL_SPEND_DOLLARS
-  CARBON_OFFSET_LBS
-  MEALS_PROVIDED
-  VOLUNTEERS_ENGAGED
+enum PaymentStatus {
+  CREATED
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
 }
 
-model Operator {
-  id              String       @id @default(cuid())
-  name            String
-  email           String       @unique
-  phone           String?
-  island          Island
-  bio             String       @db.Text
-  photoUrl        String?
-  website         String?
-  category        Category[]
-  verified        Boolean      @default(false)
-  active          Boolean      @default(true)
-  impactStatement String?      @db.Text
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  experiences     Experience[]
+enum RiskType {
+  WEATHER
+  OCEAN_SAFETY
+  WATER_QUALITY
+  JELLYFISH
+  LOCAL_EVENT
+  SUPPLIER_CHANGE
+  TRAFFIC
 }
 
-model Experience {
-  id              String           @id @default(cuid())
-  operatorId      String
-  operator        Operator         @relation(fields: [operatorId], references: [id])
-  name            String
-  description     String           @db.Text
-  island          Island
-  category        Category
-  durationMinutes Int
-  pricePerPerson  Float
-  maxGroupSize    Int
-  budgetTier      BudgetTier
-  availability    AvailabilityType
-  availableFrom   DateTime?
-  availableTo     DateTime?
-  impactMetrics   ImpactMetric[]
-  photoUrl        String?
-  status          ExperienceStatus @default(ACTIVE)
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  bookings        Booking[]
+enum RiskSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum SignalStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+  EXPIRED
+}
+
+enum ReplanStatus {
+  DRAFT
+  SENT
+  APPROVED
+  DECLINED
+  EXPIRED
+}
+
+enum ChangeRequestStatus {
+  REQUESTED
+  QUOTED
+  APPROVED
+  DECLINED
+  APPLIED
+  EXPIRED
+  CANCELLED
+}
+
+enum NotificationType {
+  MAGIC_LINK
+  MASKED_PREVIEW_READY
+  ITINERARY_READY
+  ITINERARY_UPDATED
+  FINAL_CONFIRM_REQUEST
+  BOOKING_COMPLETE
+  RISK_ALERT
+  REPLAN_SUGGESTION
+  DEPARTURE_REMINDER
+  NEXT_DAY_DIGEST
+  DAILY_FEEDBACK_REQUEST
+  CHANGE_QUOTE
+  CHANGE_CONFIRMATION
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  FAILED
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+}
+
+enum ImpactDirection {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+model PreviewSession {
+  id                      String         @id @default(cuid())
+  publicId                String         @unique @default(cuid())
+  island                  Island         @default(OAHU)
+  arrivalDate             DateTime
+  departureDate           DateTime
+  groupSize               Int
+  travelerName            String?
+  travelerEmail           String?
+  travelerPhone           String?
+  smsAlertsRequested      Boolean        @default(false)
+  preferencePayload       Json?
+  maskedSummary           Json?
+  maskedPriceEstimateMin  Decimal?       @db.Decimal(10, 2)
+  maskedPriceEstimateMax  Decimal?       @db.Decimal(10, 2)
+  scoreBand               ScoreBand?
+  status                  PreviewStatus  @default(REQUESTED)
+  expiresAt               DateTime?
+  convertedAt             DateTime?
+  createdAt               DateTime       @default(now())
+
+  trip                    Trip?
+  updatedAt               DateTime       @updatedAt
+
+  @@index([status, createdAt])
+  @@index([island, arrivalDate])
+}
+
+model Supplier {
+  id                      String         @id @default(cuid())
+  name                    String
+  island                  Island
+  status                  SupplierStatus @default(PUBLIC_ONLY)
+  websiteUrl              String
+  bookingHomeUrl          String?
+  description             String?
+  latitude                Decimal?       @db.Decimal(9, 6)
+  longitude               Decimal?       @db.Decimal(9, 6)
+  categoryTags            String[]
+  active                  Boolean        @default(true)
+  notes                   String?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  products                Product[]
+  bookingSources          BookingSource[]
+}
+
+model Product {
+  id                      String               @id @default(cuid())
+  supplierId              String
+  supplier                Supplier             @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  title                   String
+  type                    ProductType
+  description             String?
+  durationMinutes         Int?
+  pricingModel            PricingModel
+  basePriceMin            Decimal?             @db.Decimal(10, 2)
+  basePriceMax            Decimal?             @db.Decimal(10, 2)
+  currency                String               @default("USD")
+  categoryTags            String[]
+  maxGuests               Int?
+  leadTimeHours           Int?                 @default(24)
+  cancellationPolicy      String?
+  locationName            String?
+  latitude                Decimal?             @db.Decimal(9, 6)
+  longitude               Decimal?             @db.Decimal(9, 6)
+  weatherSensitive        Boolean              @default(false)
+  oceanSensitive          Boolean              @default(false)
+  localEventSensitive     Boolean              @default(false)
+  serviceFeeEligible      Boolean              @default(true)
+  active                  Boolean              @default(true)
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  bookingSources          BookingSource[]
+  snapshots               AvailabilitySnapshot[]
+  sessions                Session[]
+  itineraryItems          ItineraryItem[]
+  impactProfile           ProductImpactProfile?
+}
+
+model ProductImpactProfile {
+  id                      String            @id @default(cuid())
+  productId               String            @unique
+  product                 Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  direction               ImpactDirection   @default(NEUTRAL)
+  baseScore               Decimal           @db.Decimal(5, 2)
+  confidenceScore         Decimal?          @db.Decimal(5, 2)
+  rationale               String?
+  methodologyVersion      String
+  reviewNotes             String?
+  lastReviewedAt          DateTime?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+}
+
+model BookingSource {
+  id                      String          @id @default(cuid())
+  supplierId              String
+  productId               String?
+  supplier                Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  product                 Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  sourceType              SourceType
+  bookingMethod           BookingMethod
+  defaultHoldType         HoldType        @default(SOFT_VERIFY)
+  label                   String
+  url                     String
+  extractionRecipe        Json?
+  freshnessTargetMin      Int             @default(60)
+  reliabilityScore        Decimal?        @db.Decimal(5, 2)
+  lastSuccessAt           DateTime?
+  lastFailureAt           DateTime?
+  active                  Boolean         @default(true)
+  notes                   String?
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  snapshots               AvailabilitySnapshot[]
+  sessions                Session[]
+  bookings                Booking[]
+
+  @@index([supplierId, active])
+  @@index([productId, active])
+}
+
+model AvailabilitySnapshot {
+  id                      String             @id @default(cuid())
+  bookingSourceId         String
+  productId               String?
+  bookingSource           BookingSource      @relation(fields: [bookingSourceId], references: [id], onDelete: Cascade)
+  product                 Product?           @relation(fields: [productId], references: [id], onDelete: SetNull)
+  status                  SnapshotStatus
+  capturedAt              DateTime           @default(now())
+  expiresAt               DateTime?
+  availabilityConfidence  Decimal?           @db.Decimal(5, 2)
+  priceConfidence         Decimal?           @db.Decimal(5, 2)
+  rawSummary              String?
+  rawData                 Json?
+  createdAt               DateTime           @default(now())
+
+  sessions                Session[]
+
+  @@index([bookingSourceId, capturedAt])
+  @@index([status, expiresAt])
+}
+
+model Session {
+  id                      String                @id @default(cuid())
+  productId               String
+  bookingSourceId         String?
+  availabilitySnapshotId  String?
+  product                 Product               @relation(fields: [productId], references: [id], onDelete: Cascade)
+  bookingSource           BookingSource?        @relation(fields: [bookingSourceId], references: [id], onDelete: SetNull)
+  availabilitySnapshot    AvailabilitySnapshot? @relation(fields: [availabilitySnapshotId], references: [id], onDelete: SetNull)
+  serviceDate             DateTime
+  startTimeLabel          String?
+  endTimeLabel            String?
+  startAt                 DateTime?
+  endAt                   DateTime?
+  bookingUrl              String?
+  price                   Decimal?              @db.Decimal(10, 2)
+  seatsRemaining          Int?
+  holdType                HoldType              @default(SOFT_VERIFY)
+  holdExpiresAt           DateTime?
+  status                  VerificationStatus    @default(PROPOSED)
+  restrictions            Json?
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+
+  itineraryItems          ItineraryItem[]
+  bookings                Booking[]
+
+  @@index([productId, serviceDate])
+  @@index([status, serviceDate])
 }
 
 model Trip {
-  id              String     @id @default(cuid())
-  email           String?
-  arrivalDate     DateTime
-  departureDate   DateTime
-  islands         Island[]
-  groupSize       Int
-  interests       Category[]
-  budgetTier      BudgetTier @default(MID)
-  premiumConcierge Boolean   @default(false)
-  specialRequests String?    @db.Text
-  itinerary       Json?
-  totalPrice      Float?
-  status          TripStatus @default(DRAFT)
-  stripeSessionId String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  bookings        Booking[]
+  id                      String            @id @default(cuid())
+  publicId                String            @unique @default(cuid())
+  previewSessionId        String?           @unique
+  previewSession          PreviewSession?   @relation(fields: [previewSessionId], references: [id], onDelete: SetNull)
+  travelerName            String
+  travelerEmail           String
+  travelerPhone           String
+  smsAlertsEnabled        Boolean           @default(false)
+  smsConsentAt            DateTime?
+  island                  Island            @default(OAHU)
+  arrivalDate             DateTime
+  departureDate           DateTime
+  groupSize               Int
+  preferencePayload       Json?
+  partyProfile            Json?
+  specialRequests         String?
+  stayLabel               String?
+  stayArea                String?
+  stayLatitude            Decimal?          @db.Decimal(9, 6)
+  stayLongitude           Decimal?          @db.Decimal(9, 6)
+  stayUpdatedAt           DateTime?
+  depositAmount           Decimal           @db.Decimal(10, 2)
+  depositCapturedAt       DateTime?
+  tripStatus              TripStatus        @default(REQUESTED)
+  magicTokenHash          String?
+  lastViewedAt            DateTime?
+  monitoringEnabled       Boolean           @default(true)
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+
+  versions                TripVersion[]
+  bookings                Booking[]
+  payments                Payment[]
+  riskSignals             RiskSignal[]
+  replanSuggestions       ReplanSuggestion[]
+  changeRequests          ChangeRequest[]
+  notifications           Notification[]
+
+  @@index([travelerEmail, createdAt])
+  @@index([tripStatus, createdAt])
+}
+
+model TripVersion {
+  id                      String              @id @default(cuid())
+  tripId                  String
+  trip                    Trip                @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  versionNumber           Int
+  status                  TripVersionStatus   @default(DRAFT)
+  summaryText             String?
+  generatedModel          String?
+  supplierSubtotal        Decimal?            @db.Decimal(10, 2)
+  restaurantEstimate      Decimal?            @db.Decimal(10, 2)
+  serviceFeeBase          Decimal?            @db.Decimal(10, 2)
+  serviceFeeRate          Decimal?            @db.Decimal(5, 4)
+  serviceFeeAmount        Decimal?            @db.Decimal(10, 2)
+  depositCreditApplied    Decimal?            @db.Decimal(10, 2)
+  serviceFeeBalanceDue    Decimal?            @db.Decimal(10, 2)
+  allInEstimatedTotal     Decimal?            @db.Decimal(10, 2)
+  confirmationWindowExpiresAt DateTime?
+  notes                   String?
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+
+  itineraryItems          ItineraryItem[]
+  bookings                Booking[]
+  replanSuggestions       ReplanSuggestion[]
+  currentForChangeRequests ChangeRequest[] @relation("CurrentVersion")
+  proposedForChangeRequests ChangeRequest[] @relation("ProposedVersion")
+  impactAssessment        TripImpactAssessment?
+
+  @@unique([tripId, versionNumber])
+  @@index([tripId, status])
+}
+
+model TripImpactAssessment {
+  id                      String             @id @default(cuid())
+  tripVersionId           String             @unique
+  tripVersion             TripVersion        @relation(fields: [tripVersionId], references: [id], onDelete: Cascade)
+  normalizedScore         Decimal            @db.Decimal(5, 2)
+  scoreBand               ScoreBand
+  methodologyVersion      String
+  summary                 String?
+  positiveItemCount       Int                @default(0)
+  negativeItemCount       Int                @default(0)
+  suggestedDonationAmount Decimal?           @db.Decimal(10, 2)
+  breakdownJson           Json?
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+
+  donationClicks          DonationLinkClick[]
+}
+
+model DonationRecipient {
+  id                      String             @id @default(cuid())
+  island                  Island
+  name                    String
+  organizationName        String?
+  donationUrl             String
+  qualificationSource     String?
+  active                  Boolean            @default(true)
+  notes                   String?
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+
+  donationClicks          DonationLinkClick[]
+
+  @@index([island, active])
+}
+
+model DonationLinkClick {
+  id                      String               @id @default(cuid())
+  tripImpactAssessmentId  String
+  donationRecipientId     String
+  tripImpactAssessment    TripImpactAssessment @relation(fields: [tripImpactAssessmentId], references: [id], onDelete: Cascade)
+  donationRecipient       DonationRecipient    @relation(fields: [donationRecipientId], references: [id], onDelete: Cascade)
+  clickedAt               DateTime             @default(now())
+  channel                 NotificationChannel  @default(EMAIL)
+  metadata                Json?
+
+  @@index([donationRecipientId, clickedAt])
+}
+
+model ItineraryItem {
+  id                      String               @id @default(cuid())
+  tripVersionId           String
+  productId               String?
+  sessionId               String?
+  tripVersion             TripVersion          @relation(fields: [tripVersionId], references: [id], onDelete: Cascade)
+  product                 Product?             @relation(fields: [productId], references: [id], onDelete: SetNull)
+  session                 Session?             @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  itemType                ItineraryItemType    @default(BOOKABLE_ITEM)
+  itemStatus              ItineraryItemStatus  @default(PROPOSED)
+  dayDate                 DateTime
+  orderIndex              Int
+  displayTitle            String
+  broadAreaLabel          String?
+  preciseLocationName     String?
+  startTimeLabel          String?
+  endTimeLabel            String?
+  startAt                 DateTime?
+  endAt                   DateTime?
+  partySize               Int?
+  supplierEstimatedSubtotal Decimal?           @db.Decimal(10, 2)
+  feeEligible             Boolean              @default(true)
+  whyNote                 String?
+  bookingUrl              String?
+  holdType                HoldType             @default(SOFT_VERIFY)
+  holdExpiresAt           DateTime?
+  verificationStatus      VerificationStatus   @default(PROPOSED)
+  maskedPreviewPayload    Json?
+  metadata                Json?
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  bookings                Booking[]
+  riskSignals             RiskSignal[]
+
+  @@index([tripVersionId, dayDate, orderIndex])
+  @@index([itemStatus])
 }
 
 model Booking {
-  id            String        @id @default(cuid())
-  tripId        String
-  trip          Trip          @relation(fields: [tripId], references: [id])
-  experienceId  String
-  experience    Experience    @relation(fields: [experienceId], references: [id])
-  date          DateTime
-  groupSize     Int
-  totalPrice    Float
-  status        BookingStatus @default(PENDING)
-  notes         String?       @db.Text
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id                      String           @id @default(cuid())
+  tripId                  String
+  tripVersionId           String?
+  itineraryItemId         String
+  bookingSourceId         String?
+  sessionId               String?
+  trip                    Trip             @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  tripVersion             TripVersion?     @relation(fields: [tripVersionId], references: [id], onDelete: SetNull)
+  itineraryItem           ItineraryItem    @relation(fields: [itineraryItemId], references: [id], onDelete: Cascade)
+  bookingSource           BookingSource?   @relation(fields: [bookingSourceId], references: [id], onDelete: SetNull)
+  session                 Session?         @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  prebookingStatus        PrebookingStatus @default(NONE)
+  holdType                HoldType         @default(SOFT_VERIFY)
+  preliminarySetAt        DateTime?
+  prebookingExpiresAt     DateTime?
+  status                  BookingStatus    @default(PENDING)
+  bookingReference        String?
+  supplierReference       String?
+  supplierChargeAmount    Decimal?         @db.Decimal(10, 2)
+  currency                String           @default("USD")
+  bookedAt                DateTime?
+  cancelledAt             DateTime?
+  failureReason           String?
+  metadata                Json?
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+
+  payments                Payment[]
+
+  @@index([tripId, status])
+  @@index([itineraryItemId])
 }
 
-model ImpactMetric {
-  id           String     @id @default(cuid())
-  experienceId String
-  experience   Experience @relation(fields: [experienceId], references: [id])
-  metricType   MetricType
-  value        Float
-  description  String?
-  createdAt    DateTime   @default(now())
+model Payment {
+  id                      String         @id @default(cuid())
+  tripId                  String
+  bookingId               String?
+  trip                    Trip           @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  booking                 Booking?       @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  kind                    PaymentKind
+  status                  PaymentStatus  @default(CREATED)
+  provider                String         @default("stripe")
+  amount                  Decimal        @db.Decimal(10, 2)
+  currency                String         @default("USD")
+  providerReference       String?
+  occurredAt              DateTime?
+  metadata                Json?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  @@index([tripId, kind, status])
+  @@index([bookingId])
+}
+
+model RiskSignal {
+  id                      String          @id @default(cuid())
+  tripId                  String
+  itineraryItemId         String?
+  trip                    Trip            @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  itineraryItem           ItineraryItem?  @relation(fields: [itineraryItemId], references: [id], onDelete: SetNull)
+  type                    RiskType
+  severity                RiskSeverity
+  status                  SignalStatus    @default(OPEN)
+  sourceName              String
+  summary                 String
+  activeFrom              DateTime?
+  activeUntil             DateTime?
+  detectedAt              DateTime        @default(now())
+  metadata                Json?
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  replanSuggestions       ReplanSuggestion[]
+
+  @@index([tripId, status, severity])
+  @@index([itineraryItemId])
+}
+
+model ReplanSuggestion {
+  id                      String          @id @default(cuid())
+  tripId                  String
+  tripVersionId           String?
+  originatingSignalId     String?
+  trip                    Trip            @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  tripVersion             TripVersion?    @relation(fields: [tripVersionId], references: [id], onDelete: SetNull)
+  originatingSignal       RiskSignal?     @relation(fields: [originatingSignalId], references: [id], onDelete: SetNull)
+  status                  ReplanStatus    @default(DRAFT)
+  summary                 String
+  diffPayload             Json?
+  costDelta               Decimal?        @db.Decimal(10, 2)
+  impactScoreDelta        Decimal?        @db.Decimal(5, 2)
+  expiresAt               DateTime?
+  sentAt                  DateTime?
+  approvedAt              DateTime?
+  declinedAt              DateTime?
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  @@index([tripId, status])
+  @@index([originatingSignalId])
+}
+
+model ChangeRequest {
+  id                      String              @id @default(cuid())
+  tripId                  String
+  currentTripVersionId    String?
+  proposedTripVersionId   String?
+  trip                    Trip                @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  currentTripVersion      TripVersion?        @relation("CurrentVersion", fields: [currentTripVersionId], references: [id], onDelete: SetNull)
+  proposedTripVersion     TripVersion?        @relation("ProposedVersion", fields: [proposedTripVersionId], references: [id], onDelete: SetNull)
+  status                  ChangeRequestStatus @default(REQUESTED)
+  travelerIntent          Json?
+  travelerMessage         String?
+  quotedSupplierDelta     Decimal?            @db.Decimal(10, 2)
+  quotedServiceFeeDelta   Decimal?            @db.Decimal(10, 2)
+  quotedTotalDelta        Decimal?            @db.Decimal(10, 2)
+  quotedImpactScoreDelta  Decimal?            @db.Decimal(5, 2)
+  expiresAt               DateTime?
+  requestedAt             DateTime            @default(now())
+  resolvedAt              DateTime?
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+
+  @@index([tripId, status, createdAt])
+}
+
+model Notification {
+  id                      String              @id @default(cuid())
+  tripId                  String
+  trip                    Trip                @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  type                    NotificationType
+  status                  NotificationStatus  @default(QUEUED)
+  channel                 NotificationChannel @default(EMAIL)
+  toAddress               String
+  subject                 String?
+  sentAt                  DateTime?
+  providerReference       String?
+  metadata                Json?
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+
+  @@index([tripId, type, status])
 }

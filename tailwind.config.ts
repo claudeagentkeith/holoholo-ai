@@ -2,36 +2,29 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}"
   ],
   theme: {
     extend: {
       colors: {
-        "deep-ocean": "#023E8A",
-        "bright-sea": "#0077B6",
-        "coral": "#FF6B6B",
-        "volcanic-black": "#1A1A2E",
-        "sand-white": "#FAFAF8",
-        "reef-green": "#2D6A4F",
-        "mist": "#E8EDEE",
+        ocean: {
+          500: "#0077B6",
+          700: "#023E8A"
+        },
+        volcanic: "#1A1A2E",
+        plumeria: "#FAFAFA",
+        coral: "#FF6B6B",
+        sand: "#F6F1E9",
+        leaf: "#356859"
       },
-      fontFamily: {
-        sans: [
-          "Inter",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif",
-        ],
-      },
-    },
+      boxShadow: {
+        soft: "0 16px 40px rgba(0, 0, 0, 0.08)"
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };
+
 export default config;

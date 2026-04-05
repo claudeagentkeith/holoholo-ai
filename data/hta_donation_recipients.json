@@ -1,0 +1,70 @@
+{
+  "confirmed": [
+    {
+      "name": "Common Ground Kauaʻi / CG Foundation",
+      "island": "Kauaʻi",
+      "cohort_operator_name": "Common Ground Kauaʻi",
+      "website": "https://commongroundkauai.com/cgfoundation/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "CG Foundation page states contributors can make a donation to the Foundation's work and links to PayPal support."
+    },
+    {
+      "name": "Hāna Arts",
+      "island": "Maui",
+      "cohort_operator_name": "Hāna Arts",
+      "website": "https://hanaarts.com/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Site has Donate navigation and donation/membership levels with tax-deductible language."
+    },
+    {
+      "name": "Hoʻi Hoʻi Ea",
+      "island": "Oʻahu",
+      "cohort_operator_name": "Hoʻi Hoʻi Ea",
+      "website": "https://www.hoihoiea.org/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Site has Donate navigation and one-time, weekly, and monthly donation options."
+    },
+    {
+      "name": "Honpa Hongwanji Mission of Hawaii / Hawaiʻi Betsuin",
+      "island": "Oʻahu",
+      "cohort_operator_name": "Honpa Hongwanji Hawaiʻi Betsuin",
+      "website": "https://hongwanjihawaii.com/donate/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Site has donate page with statewide programs, temple donations, and PayPal donation links."
+    },
+    {
+      "name": "KAʻEHU",
+      "island": "Maui",
+      "cohort_operator_name": "KAʻEHU",
+      "website": "https://www.kaehu.org/donate",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Dedicated donate/support page for land restoration and cultural work."
+    },
+    {
+      "name": "Men of PAʻA",
+      "island": "Hawaiʻi Island",
+      "cohort_operator_name": "Men of PAʻA",
+      "website": "https://menofpaa.org/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Site navigation includes Donate to Men of Paa linked to PayPal; Imu Mea ʻAi site says it is the social enterprise owned by Men of PAʻA."
+    },
+    {
+      "name": "Molokaʻi Land Trust",
+      "island": "Molokaʻi",
+      "cohort_operator_name": "Molokaʻi Land Trust",
+      "website": "https://molokailandtrust.org/donate/",
+      "donation_status": "confirmed_site_donation_path",
+      "notes": "Dedicated donate page for Mokio Preserve restoration and related volunteer/stewardship programs."
+    }
+  ],
+  "manual_review": [
+    {
+      "name": "Aloha with Touch Kauaʻi",
+      "island": "Kauaʻi",
+      "cohort_operator_name": "Aloha with Touch Kauaʻi",
+      "website": "https://touchkauai.com/cultural-connection/",
+      "donation_status": "manual_review_donation_language_only",
+      "notes": "Site says monetary exchange for cultural experiences is provided through generous donations to practitioners and organizations and welcomes additional contributions, but evidence did not show a clean standalone donation checkout."
+    }
+  ]
+}

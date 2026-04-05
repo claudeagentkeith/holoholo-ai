@@ -1,0 +1,3 @@
+export const PLANNING_DEPOSIT_CENTS = Number(process.env.NEXT_PUBLIC_PLANNING_DEPOSIT_CENTS ?? 1500);
+export const PLANNING_DEPOSIT_DOLLARS = PLANNING_DEPOSIT_CENTS / 100;
+export const OAHU_PILOT_LABEL = "Oʻahu pilot";

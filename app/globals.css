@@ -3,23 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 241, 245, 249;
+  color-scheme: light;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: #fafafa;
+  color: #1a1a2e;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
-  min-height: 100vh;
+  @apply antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a {
+  @apply text-ocean-700 underline-offset-4 hover:underline;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select {
+  @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/20;
+}
+
+label {
+  @apply text-sm font-medium text-slate-700;
+}
+
+button {
+  @apply transition;
+}
+
+.card {
+  @apply rounded-2xl border border-slate-200 bg-white shadow-soft;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium;
+}
+
+.page-shell {
+  @apply mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8;
 }
