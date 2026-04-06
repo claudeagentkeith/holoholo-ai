@@ -187,21 +187,6 @@ export default function ItineraryPage() {
     setSubmitting(true);
     router.push('/preview/sample');
   };
-      const res = await fetch('/api/preview-sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.publicId) router.push('/preview/' + data.publicId);
-      }
-    } catch (err) {
-      console.error('Submit error:', err);
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const toggleRegen = (label: string) => {
     setSelectedRegen(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]);
