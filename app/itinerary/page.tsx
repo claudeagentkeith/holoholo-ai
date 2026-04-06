@@ -5,25 +5,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 
-/* ── Inline UnderConstruction Banner ── */
+/* Inline UnderConstruction */
 function UnderConstruction({ message }: { message?: string }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style={{ background: 'rgba(0,0,0,0.0)' }}>
       <div className="pointer-events-auto bg-yellow-400 text-gray-900 px-8 py-4 rounded-xl shadow-2xl transform -rotate-2 border-4 border-yellow-600">
         <div className="flex items-center gap-3">
-          <span className="text-3xl">\u{1F6A7}</span>
+          <span className="text-3xl">🚧</span>
           <div>
             <p className="font-bold text-xl">Under Construction</p>
             <p className="text-sm text-gray-700">{message || 'This page is being built. Check back soon!'}</p>
           </div>
-          <span className="text-3xl">\u{1F6A7}</span>
+          <span className="text-3xl">🚧</span>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── Inline Header ── */
+
+/* Inline Header */
 function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = [
@@ -35,7 +36,7 @@ function Header() {
     <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl">\u{1F33A}</span>
+          <span className="text-2xl">🌺</span>
           <span className="text-xl font-bold text-emerald-700">Holoholo.ai</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
@@ -64,7 +65,8 @@ function Header() {
   );
 }
 
-/* ── Inline Footer ── */
+
+/* Inline Footer */
 function SiteFooter() {
   const year = new Date().getFullYear();
   const footerLinks = [
@@ -84,7 +86,7 @@ function SiteFooter() {
               <p>Honolulu, HI 96813</p>
             </div>
             <p className="text-sm italic text-gray-400 mt-4">
-              \u201CExperience Hawai\u02BBi. Give back to Hawai\u02BBi.\u201D
+              “Experience Hawaiʻi. Give back to Hawaiʻi.”
             </p>
           </div>
           <div className="space-y-4">
@@ -100,13 +102,14 @@ function SiteFooter() {
             </ul>
           </div>
           <div>
-            <p className="text-sm text-gray-400">\u00A9 {year} Holoholo.ai LLC. All rights reserved.</p>
+            <p className="text-sm text-gray-400">© {year} Holoholo.ai LLC. All rights reserved.</p>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
 
 const regenActivities = [
   { label: 'Reef Restoration', desc: 'Help restore coral reefs with marine biologists', image: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=80&h=80&fit=crop' },
@@ -180,7 +183,6 @@ export default function ItineraryPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
-  /* ── V1.1 Submit Handler ── */
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -524,7 +526,7 @@ export default function ItineraryPage() {
             </div>
             <div className="flex justify-between mt-8">
               <button onClick={() => setStep(2)} className="text-gray-600 px-6 py-3 rounded-xl border hover:bg-gray-50">&larr; Back</button>
-              <button onClick={handleSubmit} disabled={submitting} className="bg-teal-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-teal-700 disabled:opacity-50">{submitting ? 'Generating...' : 'Generate My Itinerary \u2728'}</button>
+              <button onClick={handleSubmit} disabled={submitting} className="bg-teal-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-teal-700 disabled:opacity-50">{submitting ? 'Generating...' : 'Generate My Itinerary ✨'}</button>
             </div>
           </div>
         )}
