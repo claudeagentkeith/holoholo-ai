@@ -3,6 +3,19 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+interface ActivityItem {
+  time: string;
+  name: string;
+  maskedName?: string;
+  type: 'regenerative' | 'leisure';
+  description: string;
+  impact?: string;
+  impactScore: number;
+  duration: string;
+  masked: boolean;
+  donateAmount?: number;
+}
+
 const sampleDays = [
   {
     day: 1,
@@ -10,9 +23,9 @@ const sampleDays = [
     items: [
       {
         time: '8:30 AM',
-        name: '██████ ████ ████████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Organic Farm Tour & Tasting',
-        type: 'regenerative',
+        type: 'regenerative' as const,
         description: 'Visit a family-owned North Shore farm for a guided tour with tropical fruit tasting and smoothie bar.',
         impact: 'Supports local agriculture and food sovereignty',
         impactScore: 8.5,
@@ -21,9 +34,9 @@ const sampleDays = [
       },
       {
         time: '11:30 AM',
-        name: '███████ ██████ ████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588',
         maskedName: 'Coastal Cleanup Walk',
-        type: 'regenerative',
+        type: 'regenerative' as const,
         description: 'Join a beach restoration effort combining environmental stewardship with stunning coastal views.',
         impact: 'Direct marine ecosystem restoration',
         impactScore: 9.2,
@@ -32,20 +45,24 @@ const sampleDays = [
       },
       {
         time: '1:00 PM',
-        name: 'Lunch at Giovanni\'s Shrimp Truck',
-        type: 'leisure',
-        description: 'Famous North Shore garlic shrimp at one of Hawaii\'s most iconic food trucks.',
+        name: "Lunch at Giovanni's Shrimp Truck",
+        type: 'leisure' as const,
+        description: "Famous North Shore garlic shrimp at one of Hawaii's most iconic food trucks.",
+        impactScore: -1.5,
         duration: '1 hour',
         masked: false,
+        donateAmount: 3,
       },
       {
         time: '2:30 PM',
-        name: '████████ ████ █████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Surfing Lesson',
-        type: 'leisure',
+        type: 'leisure' as const,
         description: 'Beginner-friendly surf instruction at a sheltered North Shore beach.',
+        impactScore: -1.8,
         duration: '2 hours',
         masked: true,
+        donateAmount: 4,
       },
     ],
   },
@@ -55,9 +72,9 @@ const sampleDays = [
     items: [
       {
         time: '9:00 AM',
-        name: '█████ ████████ ████████',
+        name: '\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Ancient Fishpond Restoration',
-        type: 'regenerative',
+        type: 'regenerative' as const,
         description: 'Help restore a 800-year-old Hawaiian fishpond through hands-on community work.',
         impact: 'Cultural preservation and wetland restoration',
         impactScore: 9.8,
@@ -67,25 +84,29 @@ const sampleDays = [
       {
         time: '12:30 PM',
         name: 'Lunch in Kailua Town',
-        type: 'leisure',
-        description: 'Explore Kailua\'s charming downtown with farm-to-table dining options.',
+        type: 'leisure' as const,
+        description: "Explore Kailua's charming downtown with farm-to-table dining options.",
+        impactScore: -0.8,
         duration: '1.5 hours',
         masked: false,
+        donateAmount: 2,
       },
       {
         time: '2:00 PM',
-        name: '███████ ████ ██████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Pillbox Hike (Lanikai)',
-        type: 'leisure',
+        type: 'leisure' as const,
         description: 'Short hike with stunning panoramic views of the Windward Coast and Mokulua Islands.',
+        impactScore: -1.2,
         duration: '1.5 hours',
         masked: true,
+        donateAmount: 3,
       },
       {
         time: '4:00 PM',
-        name: '██████ ███████ ████████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Native Garden Planting',
-        type: 'regenerative',
+        type: 'regenerative' as const,
         description: 'Contribute to endemic Hawaiian plant restoration at a community botanical garden.',
         impact: 'Native species propagation',
         impactScore: 7.9,
@@ -101,16 +122,18 @@ const sampleDays = [
       {
         time: '7:00 AM',
         name: 'Diamond Head Hike',
-        type: 'leisure',
+        type: 'leisure' as const,
         description: 'Iconic crater trail with panoramic views of Waikiki and the Pacific Ocean.',
+        impactScore: -1.0,
         duration: '2 hours',
         masked: false,
+        donateAmount: 2,
       },
       {
         time: '10:00 AM',
-        name: '████ ██████████ ██████',
+        name: '\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Reef Restoration Dive',
-        type: 'regenerative',
+        type: 'regenerative' as const,
         description: 'Help marine biologists with coral restoration work at a protected reef site.',
         impact: 'Marine ecosystem regeneration',
         impactScore: 9.5,
@@ -119,146 +142,221 @@ const sampleDays = [
       },
       {
         time: '1:30 PM',
-        name: '██████ ██ ███████',
+        name: '\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588',
         maskedName: 'Lunch at Local Spot',
-        type: 'leisure',
+        type: 'leisure' as const,
         description: 'Authentic Hawaiian plate lunch at a local favorite near Waikiki.',
+        impactScore: -1.0,
         duration: '1 hour',
         masked: true,
+        donateAmount: 2,
       },
       {
         time: '3:00 PM',
         name: 'Snorkeling at Hanauma Bay',
-        type: 'leisure',
+        type: 'leisure' as const,
         description: 'World-famous reef snorkeling at a protected marine conservation area.',
+        impactScore: -2.5,
         duration: '2.5 hours',
         masked: false,
+        donateAmount: 5,
       },
     ],
   },
 ];
 
-const tripSummary = {
-  totalImpactScore: 44.9,
-  regenActivities: 5,
-  leisureActivities: 7,
-  estimatedCost: '$1,200 - $1,800',
-  island: "O'ahu",
-  duration: '3 days',
-};
+function getScoreColor(score: number): string {
+  if (score >= 7) return 'text-emerald-400';
+  if (score >= 4) return 'text-green-400';
+  if (score >= 0) return 'text-yellow-400';
+  if (score >= -3) return 'text-orange-400';
+  return 'text-red-400';
+}
+
+function getScoreBg(score: number): string {
+  if (score >= 7) return 'bg-emerald-950 border-emerald-700';
+  if (score >= 4) return 'bg-green-950 border-green-700';
+  if (score >= 0) return 'bg-yellow-950 border-yellow-700';
+  if (score >= -3) return 'bg-orange-950 border-orange-700';
+  return 'bg-red-950 border-red-700';
+}
 
 export default function SamplePreviewPage() {
   const [revealedItems, setRevealedItems] = useState<Record<string, boolean>>({});
 
+  const allItems = sampleDays.flatMap(d => d.items);
+  const regenItems = allItems.filter(a => a.type === 'regenerative');
+  const leisureItems = allItems.filter(a => a.type === 'leisure');
+  const totalPositive = regenItems.reduce((sum, a) => sum + a.impactScore, 0);
+  const totalNegative = leisureItems.reduce((sum, a) => sum + a.impactScore, 0);
+  const netScore = totalPositive + totalNegative;
+  const totalDonation = leisureItems.reduce((sum, a) => sum + (a.donateAmount || 0), 0);
+
   return (
-    <>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', color: '#e5e5e5' }}>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-emerald-700">
-            🌺 Holoholo.ai
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">
-            <Link href="/#how-it-works" className="hover:text-gray-900">How It Works</Link>
-            <Link href="/#about" className="hover:text-gray-900">About</Link>
-            <Link href="/itinerary" className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-700">Plan Your Trip</Link>
-          </nav>
+      <header style={{ borderBottom: '1px solid #262626', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '28px' }}>{'\u{1F30A}'}</span>
+          <span style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff' }}>Holoholo.ai</span>
+        </div>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <Link href="/itinerary" style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #404040', color: '#a3a3a3', textDecoration: 'none', fontSize: '14px' }}>Plan New Trip</Link>
         </div>
       </header>
 
-      {/* Under Construction Banner */}
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
-        <div className="bg-yellow-400 text-black px-8 py-4 rounded-lg shadow-2xl rotate-[-2deg] pointer-events-auto">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🚧</span>
-            <div>
-              <p className="font-bold text-lg">Sample Preview</p>
-              <p className="text-sm opacity-80">This is a demo of the masked itinerary experience</p>
-            </div>
-            <span className="text-2xl">🚧</span>
+      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '32px 24px' }}>
+        {/* Sample Banner */}
+        <div style={{ backgroundColor: '#422006', border: '1px solid #a16207', borderRadius: '12px', padding: '16px 20px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '24px' }}>{'\u{1F6A7}'}</span>
+          <div>
+            <div style={{ fontWeight: 600, color: '#fde68a', fontSize: '15px' }}>Sample Preview</div>
+            <div style={{ fontSize: '13px', color: '#fcd34d' }}>This is a demo of the masked itinerary experience</div>
           </div>
         </div>
-      </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Trip Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Your Regenerative Itinerary</h1>
-          <p className="text-gray-600 mb-4">
-            Here is your personalized {tripSummary.duration} O\'ahu experience blending regenerative tourism with leisure activities.
+        <div style={{ marginBottom: '32px' }}>
+          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#ffffff', margin: '0 0 8px 0' }}>Your Regenerative Itinerary</h1>
+          <p style={{ color: '#a3a3a3', margin: '0 0 20px 0', fontSize: '15px' }}>
+            {"Here's"} your personalized 3-day {"O'ahu"} experience blending regenerative tourism with leisure activities.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-emerald-50 rounded-xl p-4">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-700">{tripSummary.totalImpactScore}</p>
-              <p className="text-xs text-gray-600">Impact Score</p>
+
+          {/* Eco Impact Scorecard */}
+          <div style={{ borderRadius: '16px', border: '1px solid #262626', backgroundColor: '#171717', padding: '24px', marginBottom: '8px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#ffffff', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {'\u{1F30D}'} Estimated Eco Impact
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '16px' }}>
+              <div style={{ textAlign: 'center', padding: '14px 8px', borderRadius: '12px', backgroundColor: '#052e16', border: '1px solid #166534' }}>
+                <div style={{ fontSize: '24px', fontWeight: 700, color: '#4ade80' }}>+{totalPositive.toFixed(1)}</div>
+                <div style={{ fontSize: '11px', color: '#86efac', marginTop: '4px' }}>Regenerative</div>
+                <div style={{ fontSize: '10px', color: '#6ee7b7' }}>{regenItems.length} activities</div>
+              </div>
+              <div style={{ textAlign: 'center', padding: '14px 8px', borderRadius: '12px', backgroundColor: '#3b0404', border: '1px solid #991b1b' }}>
+                <div style={{ fontSize: '24px', fontWeight: 700, color: '#f87171' }}>{totalNegative.toFixed(1)}</div>
+                <div style={{ fontSize: '11px', color: '#fca5a5', marginTop: '4px' }}>Leisure Impact</div>
+                <div style={{ fontSize: '10px', color: '#fecaca' }}>{leisureItems.length} activities</div>
+              </div>
+              <div style={{ textAlign: 'center', padding: '14px 8px', borderRadius: '12px', backgroundColor: netScore >= 0 ? '#052e16' : '#3b0404', border: netScore >= 0 ? '1px solid #166534' : '1px solid #991b1b' }}>
+                <div style={{ fontSize: '24px', fontWeight: 700, color: netScore >= 0 ? '#4ade80' : '#f87171' }}>{netScore >= 0 ? '+' : ''}{netScore.toFixed(1)}</div>
+                <div style={{ fontSize: '11px', color: netScore >= 0 ? '#86efac' : '#fca5a5', marginTop: '4px' }}>Net Score</div>
+                <div style={{ fontSize: '10px', color: netScore >= 0 ? '#6ee7b7' : '#fecaca' }}>{netScore >= 0 ? 'Net Positive!' : 'Needs Offset'}</div>
+              </div>
+              <div style={{ textAlign: 'center', padding: '14px 8px', borderRadius: '12px', backgroundColor: '#1e1b4b', border: '1px solid #4338ca' }}>
+                <div style={{ fontSize: '24px', fontWeight: 700, color: '#a78bfa' }}>${totalDonation}</div>
+                <div style={{ fontSize: '11px', color: '#c4b5fd', marginTop: '4px' }}>Offset Amount</div>
+                <div style={{ fontSize: '10px', color: '#ddd6fe' }}>Recommended</div>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-700">{tripSummary.regenActivities}</p>
-              <p className="text-xs text-gray-600">Regen Activities</p>
+
+            {/* Progress Bar */}
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#a3a3a3', marginBottom: '4px' }}>
+                <span>Impact Balance</span>
+                <span>{netScore >= 0 ? 'Net Positive Trip!' : 'Offset recommended'}</span>
+              </div>
+              <div style={{ height: '6px', borderRadius: '4px', backgroundColor: '#262626', overflow: 'hidden', position: 'relative' as const }}>
+                <div style={{ position: 'absolute' as const, left: 0, top: 0, height: '100%', width: `${Math.min(100, ((totalPositive) / (totalPositive + Math.abs(totalNegative))) * 100)}%`, backgroundColor: '#22c55e', borderRadius: '4px' }} />
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-700">{tripSummary.leisureActivities}</p>
-              <p className="text-xs text-gray-600">Leisure Activities</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-emerald-700">{tripSummary.estimatedCost}</p>
-              <p className="text-xs text-gray-600">Est. Budget</p>
+
+            {/* Donate CTA */}
+            <div style={{ backgroundColor: '#1e1b4b', borderRadius: '10px', padding: '16px', border: '1px solid #4338ca', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: '12px' }}>
+              <div>
+                <div style={{ fontWeight: 600, color: '#e0e7ff', fontSize: '14px' }}>{'\u{1F33F}'} Offset Your Leisure Impact</div>
+                <div style={{ fontSize: '12px', color: '#a5b4fc', marginTop: '4px' }}>
+                  A ${totalDonation} donation supports coral restoration, reforestation, and wildlife habitat projects across Hawaii.
+                </div>
+              </div>
+              <Link href="/donate" style={{ padding: '10px 20px', borderRadius: '8px', backgroundColor: '#6366f1', color: 'white', textDecoration: 'none', fontWeight: 600, fontSize: '13px', whiteSpace: 'nowrap' as const, display: 'inline-block' }}>
+                Donate ${totalDonation} to Offset {'\u2192'}
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Day Cards */}
         {sampleDays.map((day) => (
-          <div key={day.day} className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold">
-                {day.day}
-              </div>
-              <h2 className="text-xl font-semibold text-gray-900">{day.title}</h2>
+          <div key={day.day} style={{ marginBottom: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: 'white', fontSize: '16px' }}>{day.day}</div>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#ffffff', margin: 0 }}>{day.title}</h2>
             </div>
 
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '10px' }}>
               {day.items.map((item, idx) => {
                 const key = day.day + '-' + idx;
                 const isRevealed = revealedItems[key];
+                const isRegen = item.type === 'regenerative';
                 return (
                   <div
                     key={idx}
-                    className={'rounded-lg border p-4 ' + (item.type === 'regenerative' ? 'border-emerald-200 bg-emerald-50/50' : 'border-gray-200 bg-white')}
+                    style={{
+                      borderRadius: '12px',
+                      border: isRegen ? '1px solid #166534' : '1px solid #333333',
+                      backgroundColor: isRegen ? '#0a1f0a' : '#171717',
+                      padding: '16px',
+                    }}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm text-gray-500 font-mono">{item.time}</span>
-                          <span className={'text-xs px-2 py-0.5 rounded-full ' + (item.type === 'regenerative' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700')}>
-                            {item.type === 'regenerative' ? '🌱 Regenerative' : '✨ Leisure'}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' as const }}>
+                          <span style={{ fontSize: '13px', color: '#737373', fontFamily: 'monospace' }}>{item.time}</span>
+                          <span style={{
+                            fontSize: '11px', padding: '2px 8px', borderRadius: '9999px',
+                            backgroundColor: isRegen ? '#052e16' : '#1e1b4b',
+                            color: isRegen ? '#86efac' : '#c4b5fd',
+                            border: isRegen ? '1px solid #166534' : '1px solid #4338ca',
+                          }}>
+                            {isRegen ? '\u{1F331} Regenerative' : '\u2728 Leisure'}
                           </span>
                           {item.masked && !isRevealed && (
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">🔒 Masked</span>
+                            <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#262626', color: '#737373', border: '1px solid #404040' }}>
+                              {'\u{1F512}'} Masked
+                            </span>
                           )}
+                          {/* Impact Score Badge */}
+                          <span style={{
+                            fontSize: '11px', padding: '2px 8px', borderRadius: '9999px',
+                            backgroundColor: item.impactScore >= 0 ? '#052e16' : '#3b0404',
+                            color: item.impactScore >= 0 ? '#4ade80' : '#f87171',
+                            border: item.impactScore >= 0 ? '1px solid #166534' : '1px solid #991b1b',
+                            fontWeight: 600,
+                          }}>
+                            {item.impactScore >= 0 ? '+' : ''}{item.impactScore}
+                          </span>
                         </div>
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 style={{ fontWeight: 600, color: '#ffffff', margin: '0 0 4px 0', fontSize: '15px' }}>
                           {item.masked && !isRevealed ? (
-                            <span className="font-mono tracking-wide text-gray-400">{item.name}</span>
+                            <span style={{ fontFamily: 'monospace', letterSpacing: '0.05em', color: '#525252' }}>{item.name}</span>
                           ) : (
                             item.maskedName || item.name
                           )}
                         </h3>
-                        <p className="text-sm text-gray-600 mt-1">{item.description}</p>
-                        <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                          <span>⏱ {item.duration}</span>
-                          {item.impactScore && (
-                            <span className="text-emerald-600 font-medium">⭐ Impact: {item.impactScore}/10</span>
-                          )}
+                        <p style={{ fontSize: '13px', color: '#a3a3a3', margin: '0 0 8px 0' }}>{item.description}</p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '12px', color: '#737373' }}>
+                          <span>{'\u23F1'} {item.duration}</span>
                         </div>
                         {item.impact && (
-                          <p className="text-xs text-emerald-600 mt-1 italic">{item.impact}</p>
+                          <p style={{ fontSize: '12px', color: '#34d399', margin: '6px 0 0 0', fontStyle: 'italic' }}>{item.impact}</p>
+                        )}
+                        {!isRegen && item.donateAmount && (
+                          <div style={{ marginTop: '8px' }}>
+                            <Link href="/donate" style={{ fontSize: '11px', color: '#a78bfa', textDecoration: 'none', padding: '4px 10px', borderRadius: '6px', border: '1px solid #4338ca', backgroundColor: '#1e1b4b', display: 'inline-block' }}>
+                              {'\u{1F33F}'} Offset: Donate ${item.donateAmount}
+                            </Link>
+                          </div>
                         )}
                       </div>
                       {item.masked && (
                         <button
                           onClick={() => setRevealedItems(prev => ({...prev, [key]: !prev[key]}))}
-                          className="ml-4 text-xs px-3 py-1.5 rounded-lg border border-emerald-300 text-emerald-700 hover:bg-emerald-50 whitespace-nowrap"
+                          style={{
+                            marginLeft: '12px', fontSize: '12px', padding: '6px 14px', borderRadius: '8px',
+                            border: '1px solid #166534', color: '#86efac', backgroundColor: 'transparent',
+                            cursor: 'pointer', whiteSpace: 'nowrap' as const,
+                          }}
                         >
                           {isRevealed ? 'Re-mask' : 'Peek'}
                         </button>
@@ -272,14 +370,14 @@ export default function SamplePreviewPage() {
         ))}
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-8 text-white text-center mb-8">
-          <h2 className="text-2xl font-bold mb-2">Ready to Book This Trip?</h2>
-          <p className="text-emerald-100 mb-6">Unlock all activity details and secure your spots with verified regenerative operators.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-emerald-700 px-8 py-3 rounded-xl font-semibold hover:bg-emerald-50 transition opacity-50 cursor-not-allowed" disabled>
-              Book Full Itinerary — Coming Soon
-            </button>
-            <Link href="/itinerary" className="border-2 border-white text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+        <div style={{ background: 'linear-gradient(135deg, #064e3b, #065f46)', borderRadius: '16px', padding: '32px', textAlign: 'center' as const, marginBottom: '32px', border: '1px solid #10b981' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#ffffff', margin: '0 0 8px 0' }}>Ready to Book This Trip?</h2>
+          <p style={{ color: '#a7f3d0', margin: '0 0 24px 0', fontSize: '15px' }}>Unlock all activity details and secure your spots with verified regenerative operators.</p>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' as const }}>
+            <Link href="/checkout/sample" style={{ padding: '12px 28px', borderRadius: '10px', backgroundColor: '#ffffff', color: '#064e3b', textDecoration: 'none', fontWeight: 600, fontSize: '15px', display: 'inline-block' }}>
+              Book Full Itinerary {'\u2192'}
+            </Link>
+            <Link href="/itinerary" style={{ padding: '12px 28px', borderRadius: '10px', border: '2px solid #ffffff', color: '#ffffff', textDecoration: 'none', fontWeight: 600, fontSize: '15px', display: 'inline-block' }}>
               Modify Preferences
             </Link>
           </div>
@@ -287,22 +385,10 @@ export default function SamplePreviewPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-100 py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-lg font-semibold mb-1">🌺 Holoholo.ai</p>
-          <p className="text-gray-400 text-sm mb-4">Regenerative Tourism, Powered by AI</p>
-          <p className="text-gray-400 text-xs">Holoholo.ai LLC • 1000 Bishop St Suite 800, Honolulu HI 96813</p>
-          <div className="flex justify-center gap-6 mt-3 text-gray-400 text-xs">
-            <Link href="/#about" className="hover:text-gray-200">About</Link>
-            <span>•</span>
-            <Link href="/privacy" className="hover:text-gray-200">Privacy Policy</Link>
-            <span>•</span>
-            <Link href="/terms" className="hover:text-gray-200">Terms</Link>
-            <span>•</span>
-            <a href="mailto:aloha@holoholo.ai" className="hover:text-gray-200">Contact</a>
-          </div>
-        </div>
+      <footer style={{ borderTop: '1px solid #262626', paddingTop: '24px', textAlign: 'center' as const, paddingBottom: '32px' }}>
+        <p style={{ fontSize: '14px', color: '#737373' }}>{'\u{1F30A}'} Holoholo.ai - Regenerative Travel, Powered by AI</p>
+        <p style={{ fontSize: '12px', color: '#525252' }}>Impact scores are calculated based on activity type, carbon footprint, community benefit, and ecosystem contribution.</p>
       </footer>
-    </>
+    </div>
   );
 }
