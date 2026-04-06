@@ -112,58 +112,58 @@ function SiteFooter() {
 
 
 const regenActivities = [
-  { label: 'Reef Restoration', desc: 'Help restore coral reefs with marine biologists', image: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=80&h=80&fit=crop' },
-  { label: 'Native Reforestation', desc: 'Plant endemic Hawaiian trees and shrubs', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=80&h=80&fit=crop' },
-  { label: 'Coastal Cleanup', desc: 'Beach cleanups and dune restoration', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=80&h=80&fit=crop' },
-  { label: 'Taro Farming', desc: "Traditional lo'i kalo restoration", image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=80&h=80&fit=crop' },
-  { label: 'Wildlife Monitoring', desc: 'Help track endangered Hawaiian species', image: 'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=80&h=80&fit=crop' },
-  { label: 'Sea Turtle Conservation', desc: 'Protect nesting sites and hatchlings', image: 'https://images.unsplash.com/photo-1591025207163-942350e47db2?w=80&h=80&fit=crop' },
-  { label: 'Wetland Restoration', desc: 'Restore native fishponds and wetlands', image: 'https://images.unsplash.com/photo-1500829243541-74b677fecc30?w=80&h=80&fit=crop' },
-  { label: 'Shark Research', desc: 'Tag and track reef sharks for conservation', image: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=80&h=80&fit=crop' },
-  { label: 'Reef Monitoring', desc: 'Underwater surveys and data collection', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=80&h=80&fit=crop' },
-  { label: 'Native Garden Planting', desc: 'Grow endemic Hawaiian plants', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&h=80&fit=crop' },
-  { label: 'Kahuku Farms Tour', desc: 'Family-owned North Shore farm tour with tropical fruit tasting and smoothie bar', image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=80&h=80&fit=crop' },
-  { label: 'Ma\'o Organic Farms', desc: 'Youth-led organic farm in Waianae supporting community food sovereignty', image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=80&h=80&fit=crop' },
-  { label: 'Frankie\'s Nursery', desc: 'Family-run tropical fruit nursery and farm tours in Waimanalo', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&h=80&fit=crop' },
-  { label: 'Gunstock Ranch', desc: 'Multi-generational family ranch with horseback riding and farm-to-table dining', image: 'https://images.unsplash.com/photo-1516367480789-5d2e7b1e7e0e?w=80&h=80&fit=crop' },
-  { label: 'Waimea Valley', desc: 'Community-supported botanical garden and cultural preserve', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=80&h=80&fit=crop' },
-  { label: 'Kuilima Farm', desc: 'HTA-accredited 468-acre regenerative farm at Turtle Bay with guided agricultural tours', image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=80&h=80&fit=crop' },
-  { label: 'North Shore EcoTours', desc: 'HTA-accredited Native Hawaiian-owned eco-tours through private conservation land in Haleiwa', image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=80&h=80&fit=crop' },
-  { label: 'Kahumana Organic Farm', desc: 'Certified organic farm in Lualualei Valley since 1978 with permaculture tours and cafe', image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c8b32?w=80&h=80&fit=crop' },
-  { label: 'Paepae o He\'eia', desc: 'Restore an ancient Hawaiian fishpond in Kaneohe through hands-on community work days', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=80&h=80&fit=crop' },
+  { label: 'Reef Restoration', desc: 'Help restore coral reefs with marine biologists', image: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=80&h=80&fit=crop', impactScore: 8.5 },
+  { label: 'Native Reforestation', desc: 'Plant endemic Hawaiian trees and shrubs', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=80&h=80&fit=crop', impactScore: 9.2 },
+  { label: 'Coastal Cleanup', desc: 'Beach cleanups and dune restoration', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=80&h=80&fit=crop', impactScore: 7.8 },
+  { label: 'Taro Farming', desc: "Traditional lo'i kalo restoration", image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=80&h=80&fit=crop', impactScore: 8.1 },
+  { label: 'Wildlife Monitoring', desc: 'Help track endangered Hawaiian species', image: 'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=80&h=80&fit=crop', impactScore: 7.5 },
+  { label: 'Sea Turtle Conservation', desc: 'Protect nesting sites and hatchlings', image: 'https://images.unsplash.com/photo-1591025207163-942350e47db2?w=80&h=80&fit=crop', impactScore: 9 },
+  { label: 'Wetland Restoration', desc: 'Restore native fishponds and wetlands', image: 'https://images.unsplash.com/photo-1500829243541-74b677fecc30?w=80&h=80&fit=crop', impactScore: 8.3 },
+  { label: 'Shark Research', desc: 'Tag and track reef sharks for conservation', image: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=80&h=80&fit=crop', impactScore: 7.9 },
+  { label: 'Reef Monitoring', desc: 'Underwater surveys and data collection', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=80&h=80&fit=crop', impactScore: 8.7 },
+  { label: 'Native Garden Planting', desc: 'Grow endemic Hawaiian plants', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&h=80&fit=crop', impactScore: 7.6 },
+  { label: 'Kahuku Farms Tour', desc: 'Family-owned North Shore farm tour with tropical fruit tasting and smoothie bar', image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=80&h=80&fit=crop', impactScore: 8 },
+  { label: 'Ma\'o Organic Farms', desc: 'Youth-led organic farm in Waianae supporting community food sovereignty', image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=80&h=80&fit=crop', impactScore: 8.4 },
+  { label: 'Frankie\'s Nursery', desc: 'Family-run tropical fruit nursery and farm tours in Waimanalo', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&h=80&fit=crop', impactScore: 7.7 },
+  { label: 'Gunstock Ranch', desc: 'Multi-generational family ranch with horseback riding and farm-to-table dining', image: 'https://images.unsplash.com/photo-1516367480789-5d2e7b1e7e0e?w=80&h=80&fit=crop', impactScore: 7.3 },
+  { label: 'Waimea Valley', desc: 'Community-supported botanical garden and cultural preserve', image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=80&h=80&fit=crop', impactScore: 9.1 },
+  { label: 'Kuilima Farm', desc: 'HTA-accredited 468-acre regenerative farm at Turtle Bay with guided agricultural tours', image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=80&h=80&fit=crop', impactScore: 9.5 },
+  { label: 'North Shore EcoTours', desc: 'HTA-accredited Native Hawaiian-owned eco-tours through private conservation land in Haleiwa', image: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=80&h=80&fit=crop', impactScore: 8.8 },
+  { label: 'Kahumana Organic Farm', desc: 'Certified organic farm in Lualualei Valley since 1978 with permaculture tours and cafe', image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c8b32?w=80&h=80&fit=crop', impactScore: 8.2 },
+  { label: 'Paepae o He\'eia', desc: 'Restore an ancient Hawaiian fishpond in Kaneohe through hands-on community work days', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=80&h=80&fit=crop', impactScore: 9.8 },
 ];
 
 const leisureActivities = [
-  { label: 'Diamond Head Hike', desc: 'Iconic crater trail with panoramic views', category: 'Hiking', image: 'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=80&h=80&fit=crop' },
-  { label: 'Koko Head Stairs', desc: '1,048 steps to a breathtaking summit', category: 'Hiking', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=80&h=80&fit=crop' },
-  { label: 'Manoa Falls Trail', desc: 'Lush rainforest hike to 150ft waterfall', category: 'Hiking', image: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba8b04?w=80&h=80&fit=crop' },
-  { label: 'Pillbox Hike (Lanikai)', desc: 'Short hike with stunning Windward views', category: 'Hiking', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=80&h=80&fit=crop' },
-  { label: 'Polo at Hawaii Polo Club', desc: 'Watch or play at the North Shore fields', category: 'Sports', image: 'https://images.unsplash.com/photo-1591228127791-8e2eaef4f374?w=80&h=80&fit=crop' },
-  { label: 'Golf at Ko Olina', desc: 'Championship course on the Leeward Coast', category: 'Sports', image: 'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=80&h=80&fit=crop' },
-  { label: 'Surfing Lessons', desc: 'Learn to ride waves at Waikiki Beach', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1502680390548-bdbac40a5296?w=80&h=80&fit=crop' },
-  { label: 'Snorkeling at Hanauma Bay', desc: 'World-famous reef snorkeling', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=80&h=80&fit=crop' },
-  { label: 'Outrigger Canoe Paddling', desc: 'Traditional Hawaiian canoe experience', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=80&h=80&fit=crop' },
-  { label: 'Kitesurfing at Kailua', desc: 'Ride the Windward trade winds', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=80&h=80&fit=crop' },
-  { label: 'Dolphin Watching', desc: 'Boat tour along the West Coast', category: 'Tours', image: 'https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=80&h=80&fit=crop' },
-  { label: 'Sunset Sailing', desc: 'Catamaran cruise off Waikiki', category: 'Tours', image: 'https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=80&h=80&fit=crop' },
-  { label: 'Helicopter Tour', desc: 'See the island from above', category: 'Tours', image: 'https://images.unsplash.com/photo-1534321238895-da3ab632df3e?w=80&h=80&fit=crop' },
-  { label: 'Photography Tour', desc: 'Capture stunning landscapes with a guide', category: 'Tours', image: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=80&h=80&fit=crop' },
-  { label: 'North Shore Day Trip', desc: 'Big waves, shrimp trucks, and sea turtles', category: 'Tours', image: 'https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=80&h=80&fit=crop' },
-  { label: 'Traditional Luau', desc: 'Feast, hula, and fire dancing', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=80&h=80&fit=crop' },
-  { label: 'Ukulele Workshop', desc: 'Learn the iconic Hawaiian instrument', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=80&h=80&fit=crop' },
-  { label: 'Hula Dancing Lesson', desc: 'Learn traditional and modern hula', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1542259009477-d625272157b7?w=80&h=80&fit=crop' },
-  { label: 'Polynesian Cultural Center', desc: 'Explore cultures of the Pacific Islands', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1598977123118-4e30ba3c4f5b?w=80&h=80&fit=crop' },
-  { label: 'Dole Plantation Tour', desc: "Pineapple gardens and the world's largest maze", category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=80&h=80&fit=crop' },
-  { label: 'Local Food Tour', desc: 'Poke, shave ice, plate lunch, and more', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=80&h=80&fit=crop' },
-  { label: 'Craft Brewery Tour', desc: 'Sample local Hawaiian-brewed beers', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=80&h=80&fit=crop' },
-  { label: 'Chocolate Farm Visit', desc: 'Bean-to-bar tasting on the North Shore', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=80&h=80&fit=crop' },
-  { label: 'Beach Yoga', desc: 'Sunrise sessions on the sand', category: 'Wellness', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&h=80&fit=crop' },
-  { label: 'Lomilomi Massage', desc: 'Traditional Hawaiian healing bodywork', category: 'Wellness', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=80&h=80&fit=crop' },
-  { label: 'Hawaiian Herbal Medicine', desc: "Learn about la'au lapa'au healing plants", category: 'Wellness', image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=80&h=80&fit=crop' },
-  { label: 'Aloha Stadium Swap Meet', desc: 'Local crafts, souvenirs, and food stalls', category: 'Shopping', image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=80&h=80&fit=crop' },
-  { label: 'Pearl Harbor Memorial', desc: 'Visit the USS Arizona and museum', category: 'History', image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=80&h=80&fit=crop' },
-  { label: 'Iolani Palace Tour', desc: 'The only royal palace in the US', category: 'History', image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=80&h=80&fit=crop' },
-  { label: 'Byodo-In Temple', desc: 'Stunning replica temple in the Valley of the Temples', category: 'History', image: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=80&h=80&fit=crop' },
+  { label: 'Diamond Head Hike', desc: 'Iconic crater trail with panoramic views', category: 'Hiking', image: 'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=80&h=80&fit=crop', impactScore: -1.2 },
+  { label: 'Koko Head Stairs', desc: '1,048 steps to a breathtaking summit', category: 'Hiking', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=80&h=80&fit=crop', impactScore: -1.5 },
+  { label: 'Manoa Falls Trail', desc: 'Lush rainforest hike to 150ft waterfall', category: 'Hiking', image: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba8b04?w=80&h=80&fit=crop', impactScore: -0.8 },
+  { label: 'Pillbox Hike (Lanikai)', desc: 'Short hike with stunning Windward views', category: 'Hiking', image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=80&h=80&fit=crop', impactScore: -1.8 },
+  { label: 'Polo at Hawaii Polo Club', desc: 'Watch or play at the North Shore fields', category: 'Sports', image: 'https://images.unsplash.com/photo-1591228127791-8e2eaef4f374?w=80&h=80&fit=crop', impactScore: -1 },
+  { label: 'Golf at Ko Olina', desc: 'Championship course on the Leeward Coast', category: 'Sports', image: 'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=80&h=80&fit=crop', impactScore: -1.3 },
+  { label: 'Surfing Lessons', desc: 'Learn to ride waves at Waikiki Beach', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1502680390548-bdbac40a5296?w=80&h=80&fit=crop', impactScore: -0.5 },
+  { label: 'Snorkeling at Hanauma Bay', desc: 'World-famous reef snorkeling', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=80&h=80&fit=crop', impactScore: -0.9 },
+  { label: 'Outrigger Canoe Paddling', desc: 'Traditional Hawaiian canoe experience', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=80&h=80&fit=crop', impactScore: -1.6 },
+  { label: 'Kitesurfing at Kailua', desc: 'Ride the Windward trade winds', category: 'Water Sports', image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=80&h=80&fit=crop', impactScore: -1.1 },
+  { label: 'Dolphin Watching', desc: 'Boat tour along the West Coast', category: 'Tours', image: 'https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=80&h=80&fit=crop', impactScore: -0.7 },
+  { label: 'Sunset Sailing', desc: 'Catamaran cruise off Waikiki', category: 'Tours', image: 'https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=80&h=80&fit=crop', impactScore: -1.4 },
+  { label: 'Helicopter Tour', desc: 'See the island from above', category: 'Tours', image: 'https://images.unsplash.com/photo-1534321238895-da3ab632df3e?w=80&h=80&fit=crop', impactScore: -0.6 },
+  { label: 'Photography Tour', desc: 'Capture stunning landscapes with a guide', category: 'Tours', image: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=80&h=80&fit=crop', impactScore: -1.7 },
+  { label: 'North Shore Day Trip', desc: 'Big waves, shrimp trucks, and sea turtles', category: 'Tours', image: 'https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=80&h=80&fit=crop', impactScore: -0.4 },
+  { label: 'Traditional Luau', desc: 'Feast, hula, and fire dancing', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=80&h=80&fit=crop', impactScore: -1.9 },
+  { label: 'Ukulele Workshop', desc: 'Learn the iconic Hawaiian instrument', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=80&h=80&fit=crop', impactScore: -0.3 },
+  { label: 'Hula Dancing Lesson', desc: 'Learn traditional and modern hula', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1542259009477-d625272157b7?w=80&h=80&fit=crop', impactScore: -1 },
+  { label: 'Polynesian Cultural Center', desc: 'Explore cultures of the Pacific Islands', category: 'Culture & Entertainment', image: 'https://images.unsplash.com/photo-1598977123118-4e30ba3c4f5b?w=80&h=80&fit=crop', impactScore: -0.8 },
+  { label: 'Dole Plantation Tour', desc: "Pineapple gardens and the world's largest maze", category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=80&h=80&fit=crop', impactScore: -1.2 },
+  { label: 'Local Food Tour', desc: 'Poke, shave ice, plate lunch, and more', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=80&h=80&fit=crop', impactScore: -0.5 },
+  { label: 'Craft Brewery Tour', desc: 'Sample local Hawaiian-brewed beers', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=80&h=80&fit=crop', impactScore: -1.5 },
+  { label: 'Chocolate Farm Visit', desc: 'Bean-to-bar tasting on the North Shore', category: 'Food & Drink', image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=80&h=80&fit=crop', impactScore: -0.9 },
+  { label: 'Beach Yoga', desc: 'Sunrise sessions on the sand', category: 'Wellness', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&h=80&fit=crop', impactScore: -1.3 },
+  { label: 'Lomilomi Massage', desc: 'Traditional Hawaiian healing bodywork', category: 'Wellness', image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=80&h=80&fit=crop', impactScore: -0.7 },
+  { label: 'Hawaiian Herbal Medicine', desc: "Learn about la'au lapa'au healing plants", category: 'Wellness', image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=80&h=80&fit=crop', impactScore: -1.1 },
+  { label: 'Aloha Stadium Swap Meet', desc: 'Local crafts, souvenirs, and food stalls', category: 'Shopping', image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=80&h=80&fit=crop', impactScore: -0.6 },
+  { label: 'Pearl Harbor Memorial', desc: 'Visit the USS Arizona and museum', category: 'History', image: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=80&h=80&fit=crop', impactScore: -1.4 },
+  { label: 'Iolani Palace Tour', desc: 'The only royal palace in the US', category: 'History', image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=80&h=80&fit=crop', impactScore: -0.8 },
+  { label: 'Byodo-In Temple', desc: 'Stunning replica temple in the Valley of the Temples', category: 'History', image: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=80&h=80&fit=crop', impactScore: -1 },
 ];
 
 const neighborhoods = ['Waikiki', 'North Shore', 'Ko Olina', 'Kailua', 'Honolulu', 'Lanikai', 'Haleiwa', 'Kapolei'];
@@ -183,28 +183,10 @@ export default function ItineraryPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setSubmitting(true);
-    try {
-      const interests = [...selectedRegen, ...selectedLeisure];
-      const budgetMap = { budget: 'value', moderate: 'balanced', premium: 'premium', luxury: 'luxury' };
-      const body = {
-        travelerName: 'Guest',
-        travelerEmail: '',
-        arrivalDate: tripDetails.startDate,
-        departureDate: tripDetails.endDate,
-        groupSize: parseInt(tripDetails.groupSize) || 2,
-        budgetTier: budgetMap[tripDetails.budget] || 'balanced',
-        fitnessLevel: preferences.fitnessLevel,
-        specialRequests: [
-          preferences.dietary ? 'Dietary: ' + preferences.dietary : '',
-          'Pace: ' + preferences.pace,
-          'Schedule: ' + preferences.schedule,
-          tripDetails.rentalCar ? 'Has rental car' : 'No rental car',
-          tripDetails.neighborhood ? 'Preferred area: ' + tripDetails.neighborhood : '',
-        ].filter(Boolean).join('. '),
-        interests,
-      };
+    router.push('/preview/sample');
+  };
       const res = await fetch('/api/preview-sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -318,6 +300,7 @@ export default function ItineraryPage() {
                       <div>
                         <span className="font-semibold text-sm">{a.label}</span>
                         <p className="text-xs text-gray-500">{a.desc}</p>
+                      {a.impactScore && <span className="text-xs font-bold text-teal-600 mt-0.5 block">+{a.impactScore} eco score</span>}
                       </div>
                       {selectedRegen.includes(a.label) && <span className="ml-auto text-teal-600">&#x2713;</span>}
                     </button>
@@ -366,6 +349,7 @@ export default function ItineraryPage() {
                               <div>
                                 <span className="font-semibold text-sm">{a.label}</span>
                                 <p className="text-xs text-gray-500">{a.desc}</p>
+                      {a.impactScore && <span className="text-xs font-bold text-red-500 mt-0.5 block">{a.impactScore} eco score</span>}
                               </div>
                               {selectedLeisure.includes(a.label) && <span className="ml-auto text-amber-600">&#x2713;</span>}
                             </button>
